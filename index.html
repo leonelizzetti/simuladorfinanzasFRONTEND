@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Buy Simulator - Iniciar Sesión</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LckMkstAAAAAJ0B5KX04qqTOOy5u3uCHjZVYDGS"></script>
-    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
@@ -46,7 +45,6 @@
         .card-footer { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; border-top: 1px solid #f1f5f9; padding-top: 20px; }
         .link-footer { font-size: 11px; color: #3a47d5; text-decoration: none; font-weight: 500; }
         .link-footer:hover { text-decoration: underline; }
-        
         .error-msg { color: #dc2626; font-size: 12px; font-weight: 600; margin-bottom: 15px; display: none; }
     </style>
 </head>
@@ -84,6 +82,8 @@
                         <span class="radio-custom"></span> Asesor bancario
                     </label>
                 </div>
+                
+                <div class="g-recaptcha" data-sitekey="6LckMkstAAAAAJ0B5KX04qqTOOy5u3uCHjZVYDGS" style="margin-bottom: 20px;"></div>
 
                 <p id="errorMessage" class="error-msg"></p>
 
