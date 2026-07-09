@@ -51,7 +51,7 @@
 </head>
 <body>
 
-    <aside class="sidebar">
+    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
         <div class="sidebar-top">
             <div class="logo-container">
                 <i class="fa-solid fa-car-side logo-icon"></i>
@@ -69,6 +69,9 @@
 
     <main class="main-content">
         <header class="top-header">
+            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
+            <i class="fa-solid fa-bars"></i>
+            </button>
             <div class="profile-widget">
                 <div class="profile-img"><i class="fa-solid fa-user-tie"></i></div>
                 <div class="profile-info">

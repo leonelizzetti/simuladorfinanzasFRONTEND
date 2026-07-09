@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+    .sidebar-mobile {
+        display: none;
+        position: fixed;
+        z-index: 50;
+        height: 100%;
+        width: 250px;
+    }
+    .sidebar-mobile.active {
+        display: flex;
+    }
+    .main-content {
+        width: 100%;
+    }
+}

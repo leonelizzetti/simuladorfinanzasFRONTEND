@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
+    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
@@ -24,6 +24,9 @@
     </aside>
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
+            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
+            <i class="fa-solid fa-bars"></i>
+            </button>
             <h1 class="text-xl font-bold text-gray-800">Mis Simulaciones</h1>
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold"><i class="fa-solid fa-user"></i></div>
