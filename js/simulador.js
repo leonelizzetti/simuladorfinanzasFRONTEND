@@ -22,6 +22,8 @@ document.getElementById('tipoGracia').addEventListener('change', function() {
     }
 });
 
+//texto porque quiero hacer commit
+
 document.getElementById('btnSimular').addEventListener('click', async () => {
     const btnSimular = document.getElementById('btnSimular');
     const btnGuardar = document.getElementById('btnGuardar');
