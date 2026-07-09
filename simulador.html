@@ -6,137 +6,225 @@
     <title>Nueva Simulación - Smart Buy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-700">
 
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div class="h-20 flex items-center px-8 border-b border-gray-100">
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0">
+        <div class="h-20 flex items-center px-8 border-b border-slate-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
-            <span class="font-bold text-xl tracking-tight">Smart Buy</span>
+            <span class="font-bold text-xl tracking-tight text-slate-800">Smart Buy</span>
         </div>
-        <nav class="flex-1 px-4 py-6 space-y-2">
-            <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
-                <i class="fa-solid fa-file-invoice-dollar w-5"></i>
-                Nueva Simulación
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
-                <i class="fa-solid fa-clock-rotate-left w-5"></i>
-                Historial
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
-                <i class="fa-solid fa-users w-5"></i>
-                Mis Clientes
-            </a>
-        </nav>
-        <div class="p-4 border-t border-gray-100">
+        <nav class="flex-1 px-4 py-6 space-y-2" id="sidebarMenu"></nav>
+        <div class="p-4 border-t border-slate-100">
             <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
-                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
-                Cerrar Sesión
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión
             </button>
         </div>
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
-            <h1 class="text-xl font-bold text-gray-800">Parámetros del Vehículo y Crédito</h1>
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-end px-10 shrink-0">
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
-                    <i class="fa-solid fa-user-tie"></i>
+                <div class="flex flex-col text-right">
+                    <span class="text-sm font-bold text-slate-800" id="topUserName">Cargando...</span>
+                    <span class="text-xs text-slate-500">Cliente</span>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-sm font-bold" id="userNameDisplay">Asesor</span>
-                    <span class="text-xs text-gray-500" id="clientNameDisplay">Cliente: ---</span>
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                    <i class="fa-solid fa-user"></i>
                 </div>
             </div>
         </header>
 
-        <div class="p-10 max-w-5xl mx-auto w-full">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-                <form id="simuladorForm" class="grid grid-cols-2 gap-6">
-                    
-                    <div class="col-span-2 text-lg font-bold text-blue-800 border-b pb-2 mb-2">1. Datos del Vehículo</div>
-                    
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Moneda</label>
-                        <select id="moneda" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                            <option value="Soles">Soles (S/)</option>
-                            <option value="Dolares">Dólares ($)</option>
-                        </select>
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Precio del Vehículo</label>
-                        <input type="number" id="precioVehiculo" step="0.01" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">% Cuota Inicial</label>
-                        <input type="number" id="porcCuotaInicial" step="0.01" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none" placeholder="Ej: 20">
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">% Cuota Final (Smart Buy)</label>
-                        <input type="number" id="porcCuotaFinal" step="0.01" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none" placeholder="Ej: 40">
-                    </div>
-
-                    <div class="col-span-2 text-lg font-bold text-blue-800 border-b pb-2 mt-4 mb-2">2. Condiciones del Crédito</div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Plazo Total (Meses)</label>
-                        <input type="number" id="plazoMeses" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Tipo de Gracia</label>
-                        <select id="tipoGracia" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                            <option value="Sin Gracia">Sin Gracia</option>
-                            <option value="Parcial">Gracia Parcial</option>
-                            <option value="Total">Gracia Total</option>
-                        </select>
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Tipo de Tasa</label>
-                        <select id="tipoTasa" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                            <option value="Efectiva">Efectiva</option>
-                            <option value="Nominal">Nominal</option>
-                        </select>
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Tasa de Interés (%)</label>
-                        <input type="number" id="tasaInteres" step="0.0001" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">Frecuencia de Capitalización (Solo Nominal)</label>
-                        <input type="number" id="periodoCapitalizacion" value="12" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                    </div>
-
-                    <div class="col-span-2 text-lg font-bold text-blue-800 border-b pb-2 mt-4 mb-2">3. Seguros y Gastos</div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">% Seguro Desgravamen Mensual</label>
-                        <input type="number" id="seguroDesgravamen" step="0.0001" value="0.05" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                    </div>
-
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-semibold text-gray-700">% Seguro Vehicular Anual</label>
-                        <input type="number" id="seguroVehicular" step="0.01" value="3.5" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
-                    </div>
-
-                    <p id="errorMessage" class="col-span-2 text-red-500 text-sm font-semibold hidden"></p>
-
-                    <div class="col-span-2 flex justify-end mt-6">
-                        <button type="submit" id="btnSubmit" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-900 transition shadow-lg">
-                            Generar Cronograma
-                        </button>
-                    </div>
-                </form>
+        <div class="p-8 max-w-7xl mx-auto w-full">
+            
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-slate-900 mb-1">Nueva Simulación de crédito vehicular</h1>
+                <p class="text-sm text-slate-500">Ingresa los datos de tu crédito y obtén una estimación de tus pagos y resultados financieros.</p>
             </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 mb-6">
+                
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-base font-bold text-slate-800 mb-5">Datos de la simulación</h2>
+                    
+                    <form id="simuladorForm" class="grid grid-cols-4 gap-x-4 gap-y-5">
+                        
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Moneda</label>
+                            <select id="moneda" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
+                                <option value="Soles">Soles (S/)</option>
+                                <option value="Dolares">Dólares ($)</option>
+                            </select>
+                        </div>
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Plazo (Meses)</label>
+                            <input type="number" id="plazoMeses" value="36" required class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                        </div>
+
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Precio de vehículo</label>
+                            <div class="relative flex items-center">
+                                <span id="iconoMoneda" class="absolute left-3 text-slate-400 text-sm font-medium">S/</span>
+                                <input type="number" id="precioVehiculo" value="93750" required class="w-full h-10 pl-8 pr-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">% Inicial</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="porcCuotaInicial" value="20" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                                <span class="absolute right-3 text-slate-400 text-sm font-medium">%</span>
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">% Cuota Final</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="porcCuotaFinal" value="30" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                                <span class="absolute right-3 text-slate-400 text-sm font-medium">%</span>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Tasa de interés</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="tasaInteres" step="0.01" value="12" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                                <span class="absolute right-3 text-slate-400 text-sm font-medium">%</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Tipo de tasa</label>
+                            <select id="tipoTasa" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
+                                <option value="Efectiva">Efectiva</option>
+                                <option value="Nominal">Nominal</option>
+                            </select>
+                        </div>
+
+                        <div class="col-span-1 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Periodo Gracia</label>
+                            <select id="tipoGracia" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
+                                <option value="Sin Gracia">Sin gracia</option>
+                                <option value="Total">Total</option>
+                                <option value="Parcial">Parcial</option>
+                            </select>
+                        </div>
+                        <div class="col-span-1 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Meses Gracia</label>
+                            <input type="number" id="mesesGracia" value="0" disabled class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-slate-100 text-slate-400">
+                        </div>
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Capitalización (Nominal)</label>
+                            <select id="periodoCapitalizacion" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
+                                <option value="1">Mensual</option>
+                                <option value="30" selected>Diaria</option>
+                            </select>
+                        </div>
+
+                        <div class="col-span-2 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Seguro desgravamen mensual</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="seguroDesgravamen" step="0.001" value="0.05" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                                <span class="absolute right-3 text-slate-400 text-sm font-medium">%</span>
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">Seguro vehicular</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="seguroVehicular" step="0.01" value="187.5" required class="w-full h-10 pl-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                            </div>
+                        </div>
+                        <div class="col-span-1 flex flex-col gap-1.5">
+                            <label class="text-xs font-semibold text-slate-700">COK Anual</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="cokAnual" step="0.01" value="10.00" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
+                                <span class="absolute right-3 text-slate-400 text-sm font-medium">%</span>
+                            </div>
+                        </div>
+
+                        <p id="errorMessage" class="col-span-4 text-red-500 text-xs font-bold text-center hidden"></p>
+
+                        <div class="col-span-4 flex justify-center gap-3 mt-4">
+                            <button type="button" id="btnSimular" class="h-10 px-6 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition">Simular</button>
+                            <button type="button" id="btnGuardar" class="h-10 px-6 bg-white border border-slate-300 text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition hidden">Guardar simulación</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col">
+                    <h2 class="text-base font-bold text-slate-800 mb-5">Resultados de la simulación</h2>
+                    
+                    <div class="grid grid-cols-3 gap-3 mb-6">
+                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">Cuota mensual</div>
+                            <div class="text-sm font-bold text-slate-900" id="resCuota">S/ 0.00</div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">TCEA</div>
+                            <div class="text-sm font-bold text-slate-900" id="resTCEA">0.00%</div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">VAN</div>
+                            <div class="text-sm font-bold text-slate-900" id="resVAN">S/ 0.00</div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">TIR</div>
+                            <div class="text-sm font-bold text-slate-900" id="resTIR">0.00%</div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">Interés Total</div>
+                            <div class="text-sm font-bold text-slate-900" id="resInteres">S/ 0.00</div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">Cuota Final</div>
+                            <div class="text-sm font-bold text-blue-700" id="resCuotaFinal">S/ 0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 min-h-[200px] flex flex-col">
+                        <h3 class="text-xs font-bold text-slate-800 mb-2">Evolución del saldo (S/)</h3>
+                        <div class="flex-1 relative w-full h-full">
+                            <canvas id="evolucionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hidden" id="cronogramaContainer">
+                <h2 class="text-base font-bold text-slate-800 mb-4">Cronograma de pagos</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="text-slate-500 border-b-2 border-slate-200">
+                            <tr>
+                                <th class="pb-3 px-2 font-semibold">N°</th>
+                                <th class="pb-3 px-2 font-semibold">Saldo Inicial</th>
+                                <th class="pb-3 px-2 font-semibold">Interés</th>
+                                <th class="pb-3 px-2 font-semibold">Cuota</th>
+                                <th class="pb-3 px-2 font-semibold">Seguros</th>
+                                <th class="pb-3 px-2 font-semibold">Amortización</th>
+                                <th class="pb-3 px-2 font-semibold">Cuota Total</th>
+                                <th class="pb-3 px-2 font-semibold">Saldo Final</th>
+                                <th class="pb-3 px-2 font-semibold text-red-600">Flujo de Caja</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCronograma" class="divide-y divide-slate-100">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </main>
 
+    <script>
+        const rolUsuario = localStorage.getItem('rol');
+        const menu = document.getElementById('sidebarMenu');
+        if (rolUsuario === 'asesor') {
+            menu.innerHTML = `<a href="inicio_asesor.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-house w-5"></i> Inicio</a> <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Nueva Simulación</a> <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-folder-open w-5"></i> Solicitudes</a> <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-users w-5"></i> Clientes</a>`;
+        } else {
+            menu.innerHTML = `<a href="inicio_cliente.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-house w-5"></i> Inicio</a> <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Nueva Simulación</a> <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-list w-5"></i> Mis Simulaciones</a>`;
+        }
+    </script>
+    <script src="./js/config.js"></script>
+    <script src="./js/inicio.js"></script>
     <script src="./js/simulador.js"></script>
 </body>
 </html>

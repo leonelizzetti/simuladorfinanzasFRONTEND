@@ -4,137 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Buy Simulator - Inicio Cliente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { width: 100vw; height: 100vh; display: flex; background-color: #f4f7fc; overflow: hidden; }
-        .sidebar { width: 240px; background-color: #ffffff; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; padding: 25px 0; z-index: 10; }
-        .sidebar-top { display: flex; flex-direction: column; gap: 40px; }
-        .logo-container { display: flex; align-items: center; gap: 10px; padding-left: 24px; }
-        .logo-icon { color: #2b43b6; font-size: 20px; }
-        .logo-text { font-size: 16px; font-weight: 700; color: #0b1a30; }
-        .logo-text span { font-weight: 400; }
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; }
-        .nav-link { display: block; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #4a5568; text-decoration: none; transition: all 0.2s; }
-        .nav-link.active { color: #3a47d5; background-color: #f0f4ff; border-left: 4px solid #3a47d5; padding-left: 20px; }
-        .nav-link:hover:not(.active) { color: #1a202c; background-color: #f7fafc; }
-        .logout-link { display: block; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #ef4444; text-decoration: none; cursor: pointer;}
-        .main-content { flex: 1; display: flex; flex-direction: column; height: 100%; overflow-y: auto; }
-        .top-header { background-color: #ffffff; padding: 15px 40px; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid #e2e8f0; }
-        .profile-widget { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .profile-img { width: 35px; height: 35px; background-color: #cbd5e1; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #718096; font-size: 18px; }
-        .profile-info { display: flex; flex-direction: column; text-align: left; }
-        .profile-name { font-size: 14px; font-weight: 600; color: #1a202c; }
-        .profile-role { font-size: 11px; color: #718096; }
-        .dashboard-body { padding: 30px 40px; display: flex; flex-direction: column; gap: 25px; }
-        .page-title h1 { font-size: 24px; color: #1a202c; font-weight: 600; margin-bottom: 4px; }
-        .page-title p { font-size: 13px; color: #718096; }
-        .welcome-banner { background-color: #ffffff; border-radius: 8px; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
-        .welcome-left { display: flex; align-items: center; gap: 20px; }
-        .welcome-avatar { width: 55px; height: 55px; background-color: #e2e8f0; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #4a5568; font-size: 24px; }
-        .welcome-text h2 { font-size: 18px; color: #3a47d5; font-weight: 600; margin-bottom: 4px; }
-        .welcome-text p { font-size: 13px; color: #718096; }
-        .data-section { display: grid; grid-template-columns: 1.3fr 1fr; gap: 25px; }
-        .panel-box { background-color: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; }
-        .panel-box h3 { font-size: 14px; color: #1a202c; margin-bottom: 15px; font-weight: 600; }
-        .custom-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
-        .custom-table th { color: #718096; font-weight: 600; padding: 10px 8px; border-bottom: 1px solid #e2e8f0; }
-        .custom-table td { padding: 12px 8px; border-bottom: 1px solid #f7fafc; color: #2d3748; }
-        .status-badge { padding: 4px 10px; border-radius: 12px; font-weight: 600; font-size: 10px; display: inline-block; text-align: center; width: 80px; }
-        .status-badge.pendiente { background-color: #ffebeb; color: #ff5c5c; }
-        .status-badge.aprobado { background-color: #e6f9ed; color: #22c55e; }
-        .status-badge.revision { background-color: #e6f0fa; color: #3a86ff; }
-        .action-link { color: #3a47d5; text-decoration: none; font-weight: 500; }
-        .quick-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .action-card { border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: #1a202c; transition: background-color 0.2s; }
-        .action-card:hover { background-color: #f8fafc; }
-        .action-card-content h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-        .action-card-content p { font-size: 10px; color: #718096; line-height: 1.3; }
-    </style>
 </head>
-<body>
+<body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
-    <aside class="sidebar">
-        <div class="sidebar-top">
-            <div class="logo-container">
-                <i class="fa-solid fa-car-side logo-icon"></i>
-                <span class="logo-text">Smart Buy <span>Simulator</span></span>
-            </div>
-            <nav class="nav-menu">
-                <a href="inicio_cliente.html" class="nav-link active"><i class="fa-solid fa-house mr-2"></i> Inicio</a>
-                <a href="simulador.html" class="nav-link"><i class="fa-solid fa-calculator mr-2"></i> Nueva Simulación</a>
-                <a href="#" class="nav-link"><i class="fa-solid fa-folder-open mr-2"></i> Mis Simulaciones</a>
-            </nav>
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
+        <div class="h-20 flex items-center px-8 border-b border-gray-100">
+            <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
+            <span class="font-bold text-xl tracking-tight">Smart Buy</span>
         </div>
-        <a id="btnLogout" class="logout-link"><i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar Sesión</a>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="inicio_cliente.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
+                <i class="fa-solid fa-house w-5"></i> Inicio
+            </a>
+            <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-file-invoice-dollar w-5"></i> Nueva Simulación
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-list w-5"></i> Mis Simulaciones
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-100">
+            <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión
+            </button>
+        </div>
     </aside>
 
-    <main class="main-content">
-        <header class="top-header">
-            <div class="profile-widget">
-                <div class="profile-img"><i class="fa-solid fa-user"></i></div>
-                <div class="profile-info">
-                    <span class="profile-name" id="userNameDisplay">Cliente</span>
-                    <span class="profile-role">Cliente</span>
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-end px-10 shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="flex flex-col text-right">
+                    <span class="text-sm font-bold text-gray-800" id="topUserName">Cargando...</span>
+                    <span class="text-xs text-gray-500">Cliente</span>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                    <i class="fa-solid fa-user"></i>
                 </div>
             </div>
         </header>
 
-        <div class="dashboard-body">
-            <div class="page-title">
-                <h1>Inicio del Cliente</h1>
-                <p>Consulta tus simulaciones, revisa su estado y continúa con tu proceso de crédito vehicular.</p>
+        <div class="p-10 max-w-7xl mx-auto w-full flex flex-col gap-6">
+            
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Inicio del Cliente</h1>
+                <p class="text-sm text-gray-500 mt-1">Consulta tus simulaciones, revisa tu estado y continúa con el proceso de crédito vehicular.</p>
             </div>
 
-            <div class="data-section">
-                <div class="panel-box">
-                    <h3>Simulaciones Recientes</h3>
-                    <div class="table-responsive">
-                        <table class="custom-table">
-                            <thead>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold text-blue-800 mb-1" id="welcomeMessage">Bienvenido</h2>
+                    <p class="text-sm text-gray-500">Aquí tienes el resumen de tu actividad reciente.</p>
+                </div>
+                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-3xl border-2 border-white shadow-sm">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-center items-center text-center">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-folder-open"></i></div>
+                    <span class="text-3xl font-bold text-gray-800" id="countGuardadas">0</span>
+                    <span class="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">Simulaciones Guardadas</span>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-center items-center text-center">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-paper-plane"></i></div>
+                    <span class="text-3xl font-bold text-gray-800" id="countEnviadas">0</span>
+                    <span class="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">Solicitudes Enviadas</span>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-center items-center text-center">
+                    <div class="w-12 h-12 bg-green-50 text-green-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-check-circle"></i></div>
+                    <span class="text-3xl font-bold text-gray-800" id="countAprobados">0</span>
+                    <span class="text-xs text-gray-500 font-medium uppercase tracking-wide mt-1">Créditos Aprobados</span>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-700 to-indigo-800 p-6 rounded-xl shadow-md flex flex-col justify-center text-white relative overflow-hidden">
+                    <i class="fa-solid fa-star absolute -right-4 -top-4 text-6xl text-white opacity-10"></i>
+                    <span class="text-xs font-semibold uppercase tracking-wide opacity-80 mb-1">Mejor opción financiera</span>
+                    <span class="text-2xl font-bold mb-1" id="bestOptionAmount">S/ 0.00</span>
+                    <span class="text-sm bg-white/20 inline-block px-3 py-1 rounded-full w-max backdrop-blur-sm" id="bestOptionTCEA">-</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-6 mt-2">
+                <div class="col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                    <div class="px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-bold text-gray-800">Simulaciones Recientes</h3>
+                    </div>
+                    <div class="overflow-x-auto p-4">
+                        <table class="w-full text-left text-sm">
+                            <thead class="text-xs text-gray-500 uppercase bg-gray-50 rounded-t-lg">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Vehículo</th>
-                                    <th>Monto</th>
-                                    <th>Estado</th>
-                                    <th>Acción</th>
+                                    <th class="px-4 py-3 rounded-tl-lg">Vehículo</th>
+                                    <th class="px-4 py-3">Moneda</th>
+                                    <th class="px-4 py-3">Monto Financiado</th>
+                                    <th class="px-4 py-3">Estado</th>
+                                    <th class="px-4 py-3 rounded-tr-lg">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="tablaSimulaciones">
+                            <tbody id="tablaSimulaciones" class="divide-y divide-gray-100">
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="panel-box">
-                    <h3>Acciones Rápidas</h3>
-                    <div class="quick-actions-grid">
-                        <a href="simulador.html" class="action-card">
-                            <div class="action-card-content">
-                                <h4>Nueva Simulación</h4>
-                                <p>Simula un crédito en pocos pasos</p>
-                            </div>
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                        <a href="#" class="action-card">
-                            <div class="action-card-content">
-                                <h4>Mis Simulaciones</h4>
-                                <p>Consulta y gestiona las guardadas</p>
-                            </div>
-                            <i class="fa-solid fa-list"></i>
-                        </a>
-                        <a href="#" class="action-card" style="grid-column: span 2;">
-                            <div class="action-card-content">
-                                <h4>Contactar Asesor</h4>
-                                <p>Comunícate con un asesor especializado</p>
-                            </div>
-                            <i class="fa-solid fa-headset"></i>
-                        </a>
+                <div class="col-span-1 bg-white rounded-xl shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-100">
+                        <h3 class="font-bold text-gray-800">Estado de tus solicitudes</h3>
+                    </div>
+                    <div class="p-6 flex flex-col gap-4">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-slate-300"></span><span class="text-sm font-medium text-gray-600">Pendiente</span></div>
+                            <span class="font-bold text-gray-800" id="statPendientes">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-400"></span><span class="text-sm font-medium text-gray-600">En revisión</span></div>
+                            <span class="font-bold text-gray-800" id="statRevision">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500"></span><span class="text-sm font-medium text-gray-600">Aprobado</span></div>
+                            <span class="font-bold text-gray-800" id="statAprobado">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span><span class="text-sm font-medium text-gray-600">Rechazado</span></div>
+                            <span class="font-bold text-gray-800" id="statRechazado">0</span>
+                        </div>
+                        <div class="border-t border-gray-100 pt-4 mt-2 flex justify-between items-center">
+                            <span class="font-bold text-gray-800">TOTAL</span>
+                            <span class="font-bold text-blue-700 text-lg" id="statTotal">0</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </main>
+
     <script src="./js/inicio.js"></script>
 </body>
 </html>

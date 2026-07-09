@@ -1,7 +1,11 @@
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('numDoc').value; 
+    const username = document.getElementById('numDoc').value;
+    const nombres = document.getElementById('nombres').value;
+    const apellidos = document.getElementById('apellidos').value;
+    const correo = document.getElementById('correo').value;
+    const telefono = document.getElementById('telefono').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const rol = document.getElementById('rol').value;
@@ -17,10 +21,11 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
     btnSubmit.innerText = "Registrando...";
     btnSubmit.style.opacity = "0.7";
+    btnSubmit.disabled = true;
     errorMessage.style.display = "none";
 
     try {
-        const response = await fetch('https://simulador-backend-grupo.onrender.com/usuarios', {
+        const response = await fetch(`${API_URL}/usuarios`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,6 +33,10 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
             body: JSON.stringify({
                 username: username,
                 password: password,
+                nombres: nombres,
+                apellidos: apellidos,
+                correo: correo,
+                telefono: telefono,
                 rol: rol,
                 estado: "activo"
             })
@@ -43,10 +52,11 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
             errorMessage.style.display = "block";
         }
     } catch (error) {
-        errorMessage.innerText = "⚠️ Error de conexión con el servidor.";
+        errorMessage.innerText = "⚠️ Mira la consola (F12) para ver el error exacto.";
         errorMessage.style.display = "block";
     } finally {
         btnSubmit.innerText = "Registrarme";
         btnSubmit.style.opacity = "1";
+        btnSubmit.disabled = false;
     }
 });
