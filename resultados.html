@@ -6,41 +6,43 @@
     <title>Resultados - Smart Buy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
-    
+
     <aside class="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
         </div>
         <nav class="flex-1 px-4 py-6 space-y-2">
-            <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
-                <i class="fa-solid fa-file-invoice-dollar w-5"></i>
-                Nueva Simulación
+            <a href="inicio_cliente.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-house w-5"></i> Inicio
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
-                <i class="fa-solid fa-clock-rotate-left w-5"></i>
-                Historial
+            <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-file-invoice-dollar w-5"></i> Nueva Simulación
+            </a>
+            <a href="mis_simulaciones.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
+                <i class="fa-solid fa-list w-5"></i> Mis Simulaciones
             </a>
         </nav>
         <div class="p-4 border-t border-gray-100">
             <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
-                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
-                Cerrar Sesión
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión
             </button>
         </div>
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
-            <h1 class="text-xl font-bold text-gray-800">Resultados y Cronograma de Pagos</h1>
+            <h1 class="text-xl font-bold text-gray-800">Resultados y Cronograma</h1>
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
-                    <i class="fa-solid fa-user-tie"></i>
+                <div class="flex flex-col text-right">
+                    <span class="text-sm font-bold text-gray-800" id="userNameDisplay">Cargando...</span>
+                    <span class="text-xs text-gray-500">Cliente</span>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-sm font-bold" id="userNameDisplay">Asesor</span>
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                    <i class="fa-solid fa-user"></i>
                 </div>
             </div>
         </header>
@@ -65,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm whitespace-nowrap">
                         <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-semibold">
@@ -81,23 +83,20 @@
                                 <th class="px-6 py-4">Saldo Final</th>
                             </tr>
                         </thead>
-                        <tbody id="cronogramaBody" class="divide-y divide-gray-100 text-gray-700">
-                        </tbody>
+                        <tbody id="cronogramaBody" class="divide-y divide-gray-100 text-gray-700"></tbody>
                     </table>
                 </div>
             </div>
 
             <div class="mt-8 flex justify-end gap-4">
-                <a href="simulador.html" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-bold hover:bg-gray-50 transition">
-                    Hacer otra simulación
+                <a href="mis_simulaciones.html" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-bold hover:bg-gray-50 transition">
+                    Regresar a Mis Simulaciones
                 </a>
-                <button class="bg-blue-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-800 transition shadow-lg">
-                    Guardar Simulación
-                </button>
             </div>
         </div>
     </main>
-    
+
+    <script src="./js/config.js"></script>
     <script src="./js/resultados.js"></script>
 </body>
 </html>

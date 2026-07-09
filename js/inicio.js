@@ -1,73 +1,89 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    const rol = localStorage.getItem('rol');
-    const username = localStorage.getItem('username');
-    const nombreReal = localStorage.getItem('nombreReal') || username; 
-
     if (!token) {
         window.location.href = 'index.html';
         return;
     }
 
-    const topUserName = document.getElementById('topUserName');
-    if (topUserName) topUserName.innerText = nombreReal;
-
-    const welcomeMessage = document.getElementById('welcomeMessage');
-    if (welcomeMessage) welcomeMessage.innerText = `Bienvenido, ${nombreReal}`;
-
-    const tablaSimulaciones = document.getElementById('tablaSimulaciones');
+    const username = localStorage.getItem('username');
+    const nombreReal = localStorage.getItem('nombreReal');
     
-    if (tablaSimulaciones && rol === 'cliente') {
-        const simDataStr = localStorage.getItem('resultadoSimulacion');
-        
-        if (simDataStr) {
-            const data = JSON.parse(simDataStr);
-            const monto = parseFloat(data.monto_financiar);
-            
-            document.getElementById('countGuardadas').innerText = "1"; 
-            document.getElementById('countEnviadas').innerText = "1";
-            document.getElementById('countAprobados').innerText = "0";
-            document.getElementById('statPendientes').innerText = "1";
-            document.getElementById('statTotal').innerText = "1";
+    const displayNombre = (nombreReal && nombreReal !== 'null' && nombreReal !== 'undefined' && nombreReal.trim() !== '') 
+        ? nombreReal 
+        : (username || 'Cliente');
 
-            document.getElementById('bestOptionAmount').innerText = data.moneda === 'Soles' ? `S/ ${monto.toLocaleString('es-PE')}` : `$ ${monto.toLocaleString('en-US')}`;
-            document.getElementById('bestOptionTCEA').innerText = `Tasa int: ${data.tasaInteres}%`;
+    const topUserName = document.getElementById('topUserName');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    
+    if (topUserName) topUserName.innerText = displayNombre;
+    if (welcomeMessage) welcomeMessage.innerText = `Bienvenido, ${displayNombre}`;
 
-            tablaSimulaciones.innerHTML = `
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="px-4 py-4 font-medium text-gray-800">Auto Cotizado</td>
-                    <td class="px-4 py-4 text-gray-600">${data.moneda || 'Soles'}</td>
-                    <td class="px-4 py-4 font-semibold text-gray-800">${data.moneda === 'Soles' ? 'S/' : '$'} ${monto.toLocaleString('es-PE')}</td>
-                    <td class="px-4 py-4">
-                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">Pendiente</span>
-                    </td>
-                    <td class="px-4 py-4">
-                        <a href="resultados.html" class="text-blue-600 hover:text-blue-800 font-medium text-sm">Ver Detalle</a>
-                    </td>
-                </tr>
-            `;
-        } else {
-            document.getElementById('countGuardadas').innerText = "0"; 
-            document.getElementById('countEnviadas').innerText = "0";
-            document.getElementById('countAprobados').innerText = "0";
-            document.getElementById('statPendientes').innerText = "0";
-            document.getElementById('statTotal').innerText = "0";
-            document.getElementById('bestOptionAmount').innerText = "S/ 0.00";
-            document.getElementById('bestOptionTCEA').innerText = "-";
-
-            tablaSimulaciones.innerHTML = `
-                <tr>
-                    <td colspan="5" class="text-center py-10 text-gray-500 text-sm">No tienes simulaciones recientes. ¡Crea una nueva!</td>
-                </tr>
-            `;
-        }
-    }
-
-    const btnLogout = document.getElementById('btnLogout');
-    if (btnLogout) {
-        btnLogout.addEventListener('click', () => {
-            localStorage.clear();
-            window.location.href = 'index.html';
+    try {
+        const response = await fetch(`${API_URL}/simulaciones`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         });
+
+        const data = await response.json();
+
+        if (response.ok && data.exito) {
+            const simulaciones = data.datos || [];
+            
+            const countGuardadas = document.getElementById('countGuardadas');
+            const statTotal = document.getElementById('statTotal');
+            const statPendientes = document.getElementById('statPendientes');
+            
+            if (countGuardadas) countGuardadas.innerText = simulaciones.length;
+            if (statTotal) statTotal.innerText = simulaciones.length;
+            if (statPendientes) statPendientes.innerText = simulaciones.length;
+            
+            if (simulaciones.length > 0) {
+                const mejorOpcion = simulaciones.reduce((prev, curr) => (parseFloat(prev.tcea) < parseFloat(curr.tcea) ? prev : curr));
+                const simbolo = mejorOpcion.moneda === 'Soles' ? 'S/' : '$';
+                
+                const bestOptionAmount = document.getElementById('bestOptionAmount');
+                const bestOptionTCEA = document.getElementById('bestOptionTCEA');
+                
+                if (bestOptionAmount) bestOptionAmount.innerText = `${simbolo} ${parseFloat(mejorOpcion.monto_financiar).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                if (bestOptionTCEA) bestOptionTCEA.innerText = `TCEA ${(parseFloat(mejorOpcion.tcea) * 100).toFixed(4)}%`;
+            }
+
+            const tabla = document.getElementById('tablaSimulaciones');
+            if (tabla) {
+                tabla.innerHTML = '';
+                if (simulaciones.length === 0) {
+                    tabla.innerHTML = `<tr><td colspan="5" class="px-4 py-6 text-center text-gray-500">Aún no has guardado ninguna simulación.</td></tr>`;
+                } else {
+                    const recientes = simulaciones.slice(0, 5);
+                    recientes.forEach(sim => {
+                        const simbolo = sim.moneda === 'Soles' ? 'S/' : '$';
+                        tabla.innerHTML += `
+                            <tr class="hover:bg-gray-50 transition border-b border-gray-100">
+                                <td class="px-4 py-4 font-medium text-gray-800">Auto Cotizado</td>
+                                <td class="px-4 py-4 text-gray-600">${sim.moneda}</td>
+                                <td class="px-4 py-4 font-bold text-gray-800">${simbolo} ${parseFloat(sim.monto_financiar).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                                <td class="px-4 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[11px] font-bold">Guardada</span></td>
+                                <td class="px-4 py-4 text-blue-600 font-medium">
+                                    <a href="resultados.html?id=${sim.id_simulacion}" class="hover:underline">Ver <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+        }
+    } catch (error) {
+        console.error(error);
     }
 });
+
+const btnLogout = document.getElementById('btnLogout');
+if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+        localStorage.clear();
+        window.location.href = 'index.html';
+    });
+}
