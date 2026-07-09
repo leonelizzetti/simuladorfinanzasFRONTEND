@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Buy Simulator - Iniciar Sesión</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #e6eff9;
+            background: linear-gradient(135deg, rgba(230,239,249,1) 0%, rgba(200,218,241,1) 100%);
+            background-image: url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2000&auto=format&fit=crop'), linear-gradient(180deg, #ffffff 0%, #cbdcf2 100%);
+            background-repeat: no-repeat; background-position: center bottom; background-size: cover;
+            position: relative; overflow: hidden;
+        }
+        body::before {
+            content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 140px;
+            background: linear-gradient(transparent, rgba(58, 95, 219, 0.1));
+            border-top: 2px solid rgba(58, 95, 219, 0.2); transform: skewY(-1.5deg); transform-origin: bottom left; z-index: 1;
+        }
+        .header-logo { position: absolute; top: 25px; left: 40px; display: flex; align-items: center; gap: 10px; z-index: 10; }
+        .logo-icon { color: #2b43b6; font-size: 24px; display: flex; gap: 4px; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #0b1a30; }
+        .logo-text span { font-weight: 400; }
+        .login-container { display: flex; justify-content: center; align-items: center; width: 100%; max-width: 1200px; padding: 0 50px; z-index: 5; }
+        .login-card { background: #ffffff; width: 100%; max-width: 480px; border-radius: 8px; padding: 40px 45px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); border: 1px solid #e1e8f0; text-align: center; }
+        .login-card h2 { font-size: 32px; color: #000000; font-weight: 500; margin-bottom: 6px; }
+        .login-card .subtitle { font-size: 11px; color: #7d8b99; margin-bottom: 30px; line-height: 1.4; }
+        .input-group { text-align: left; margin-bottom: 22px; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; color: #2c3338; margin-bottom: 8px; }
+        .input-group input { width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 25px; font-size: 13px; background-color: #ffffff; color: #333; outline: none; transition: border-color 0.2s; }
+        .input-group input::placeholder { color: #cbd5e1; }
+        .input-group input:focus { border-color: #3a47d5; }
+        .section-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: #2c3338; margin-bottom: 12px; }
+        .role-selection { display: flex; gap: 15px; margin-bottom: 15px; } /* Ajusté el margen */
+        .role-option { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 25px; font-size: 13px; font-weight: 600; color: #1a202c; cursor: pointer; background-color: #ffffff; user-select: none; }
+        .role-option input { display: none; }
+        .radio-custom { width: 18px; height: 18px; border: 1px solid #cbd5e1; border-radius: 50%; display: inline-block; position: relative; }
+        .role-option input:checked + .radio-custom { border-color: #3a47d5; }
+        .role-option input:checked + .radio-custom::after { content: ""; width: 10px; height: 10px; background-color: #3a47d5; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .btn-submit { width: 100%; background-color: #3333b3; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 20px; transition: background-color 0.2s; }
+        .btn-submit:hover { background-color: #252596; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; border-top: 1px solid #f1f5f9; padding-top: 20px; }
+        .link-footer { font-size: 11px; color: #3a47d5; text-decoration: none; font-weight: 500; }
+        .link-footer:hover { text-decoration: underline; }
+        
+        .error-msg { color: #dc2626; font-size: 12px; font-weight: 600; margin-bottom: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+    <header class="header-logo">
+        <div class="logo-icon"><i class="fa-solid fa-car-side"></i></div>
+        <span class="logo-text">Smart Buy <span>Simulator</span></span>
+    </header>
+
+    <main class="login-container">
+        <section class="login-card">
+            <h2>Iniciar Sesión</h2>
+            <p class="subtitle">Accede para guardar tus simulaciones y revisa tu historial</p>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Usuario, Correo o DNI</label>
+                    <input type="text" id="username" placeholder="Ingresa tu usuario" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+
+                <label class="section-label">Selecciona tu rol</label>
+                <div class="role-selection">
+                    <label class="role-option">
+                        <input type="radio" name="role" value="cliente" checked>
+                        <span class="radio-custom"></span> Cliente
+                    </label>
+                    <label class="role-option">
+                        <input type="radio" name="role" value="asesor">
+                        <span class="radio-custom"></span> Asesor bancario
+                    </label>
+                </div>
+
+                <p id="errorMessage" class="error-msg"></p>
+
+                <button type="submit" id="btnSubmit" class="btn-submit">Iniciar Sesión</button>
+            </form>
+
+            <div class="card-footer">
+                <a href="#" class="link-footer">Crear cuenta</a>
+                <a href="#" class="link-footer">Olvidé mi contraseña</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="./js/login.js"></script>
+</body>
+</html>

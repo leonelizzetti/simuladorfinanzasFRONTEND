@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Buy Simulator - Crear Cuenta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #e6eff9;
+            background: linear-gradient(135deg, rgba(230,239,249,1) 0%, rgba(200,218,241,1) 100%);
+            background-image: url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2000&auto=format&fit=crop'), linear-gradient(180deg, #ffffff 0%, #cbdcf2 100%);
+            background-repeat: no-repeat; background-position: center bottom; background-size: cover;
+            position: relative; overflow: hidden;
+        }
+        body::before {
+            content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 140px;
+            background: linear-gradient(transparent, rgba(58, 95, 219, 0.1));
+            border-top: 2px solid rgba(58, 95, 219, 0.2); transform: skewY(-1.5deg); transform-origin: bottom left; z-index: 1;
+        }
+        .header-logo { position: absolute; top: 25px; left: 40px; display: flex; align-items: center; gap: 10px; z-index: 10; }
+        .logo-icon { color: #2b43b6; font-size: 24px; display: flex; gap: 4px; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #0b1a30; }
+        .logo-text span { font-weight: 400; }
+        .register-container { display: flex; justify-content: center; align-items: center; width: 100%; max-width: 1200px; padding: 20px 50px; z-index: 5; }
+        .register-card { background: #ffffff; width: 100%; max-width: 720px; border-radius: 8px; padding: 30px 45px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); border: 1px solid #e1e8f0; text-align: center; max-height: 90vh; overflow-y: auto; }
+        .register-card h2 { font-size: 32px; color: #000000; font-weight: 500; margin-bottom: 4px; }
+        .register-card .subtitle { font-size: 11px; color: #7d8b99; margin-bottom: 25px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; row-gap: 16px; text-align: left; }
+        .full-width { grid-column: span 2; }
+        .input-group { display: flex; flex-direction: column; }
+        .input-group label { font-size: 13px; font-weight: 600; color: #2c3338; margin-bottom: 6px; }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .input-wrapper i.prefix-icon { position: absolute; left: 14px; color: #a0aec0; font-size: 14px; }
+        .input-wrapper input, .input-wrapper select { width: 100%; padding: 11px 16px; border: 1px solid #e2e8f0; border-radius: 25px; font-size: 13px; background-color: #ffffff; color: #333; outline: none; transition: border-color 0.2s; appearance: none; }
+        .input-wrapper.has-prefix input, .input-wrapper.has-prefix select { padding-left: 38px; }
+        .input-wrapper select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 38px; }
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: #3a47d5; }
+        .extra-section { margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .captcha-mock { display: flex; align-items: center; justify-content: space-between; width: 260px; padding: 10px 14px; background: #f9f9f9; border: 1px solid #d1d5db; border-radius: 3px; }
+        .captcha-left { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #555; }
+        .captcha-left input { width: 22px; height: 22px; cursor: pointer; }
+        .captcha-right { text-align: center; font-size: 8px; color: #777; }
+        .captcha-right i { font-size: 18px; color: #1a73e8; display: block; margin-bottom: 2px; }
+        .terms-group { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; width: 100%; max-width: 400px; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #2c3338; cursor: pointer; }
+        .checkbox-label input { width: 15px; height: 15px; accent-color: #3a47d5; }
+        .checkbox-label span { color: #5d6f84; }
+        .btn-submit { width: 100%; max-width: 400px; background-color: #3333b3; color: white; border: none; padding: 13px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 10px; transition: background-color 0.2s; }
+        .btn-submit:hover { background-color: #252596; }
+        .login-redirect { margin-top: 15px; font-size: 11px; color: #7d8b99; }
+        .login-redirect a { color: #3a47d5; text-decoration: none; font-weight: 600; }
+        .login-redirect a:hover { text-decoration: underline; }
+        .error-msg { color: #dc2626; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <header class="header-logo">
+        <div class="logo-icon"><i class="fa-solid fa-car-side"></i></div>
+        <span class="logo-text">Smart Buy <span>Simulator</span></span>
+    </header>
+
+    <main class="register-container">
+        <section class="register-card">
+            <h2>Crear Cuenta</h2>
+            <p class="subtitle">Completa tus datos para registrarte</p>
+
+            <form id="registerForm">
+                <div class="form-grid">
+                    
+                    <div class="input-group">
+                        <label>Tipo de documento</label>
+                        <div class="input-wrapper">
+                            <select id="tipoDoc">
+                                <option value="DNI">DNI</option>
+                                <option value="CE">Carnet de Extranjería</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>N° de documento</label>
+                        <div class="input-wrapper has-prefix">
+                            <i class="fa-regular fa-id-card prefix-icon"></i>
+                            <input type="text" id="numDoc" placeholder="Ej: 12345678" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nombres</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="nombres" placeholder="Ingresa tus nombres" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Apellidos</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="apellidos" placeholder="Ingresa tus apellidos" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label>Correo electrónico</label>
+                        <div class="input-wrapper has-prefix">
+                            <i class="fa-regular fa-envelope prefix-icon"></i>
+                            <input type="email" id="correo" placeholder="ejemplo@correo.com" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Teléfono celular</label>
+                        <div class="input-wrapper has-prefix">
+                            <i class="fa-solid fa-phone prefix-icon"></i>
+                            <input type="text" id="telefono" placeholder="Ej: 987 654 321" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Rol</label>
+                        <div class="input-wrapper">
+                            <select id="rol" required>
+                                <option value="cliente">Cliente</option>
+                                <option value="asesor">Asesor Bancario</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <div class="input-wrapper has-prefix">
+                            <i class="fa-solid fa-lock prefix-icon"></i>
+                            <input type="password" id="password" placeholder="Crear contraseña" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirmar contraseña</label>
+                        <div class="input-wrapper has-prefix">
+                            <i class="fa-solid fa-lock prefix-icon"></i>
+                            <input type="password" id="confirmPassword" placeholder="Vuelve a ingresar tu contraseña" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="extra-section">
+                    <div class="terms-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>Acepto los Términos y Condiciones</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>Acepto el Uso de datos personales</span>
+                        </label>
+                    </div>
+
+                    <p id="errorMessage" class="error-msg"></p>
+
+                    <button type="submit" id="btnSubmit" class="btn-submit">Registrarme</button>
+                    
+                    <div class="login-redirect">
+                        ¿Ya tienes una cuenta? <a href="index.html">Iniciar sesión</a>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="./js/register.js"></script>
+</body>
+</html>

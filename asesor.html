@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Asesor - Smart Buy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
+
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div class="h-20 flex items-center px-8 border-b border-gray-100">
+            <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
+            <span class="font-bold text-xl tracking-tight">Smart Buy</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
+                <i class="fa-solid fa-file-invoice-dollar w-5"></i>
+                Nueva Simulación
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+                Historial
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-users w-5"></i>
+                Mis Clientes
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-100">
+            <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
+                Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
+            <h1 class="text-xl font-bold text-gray-800">Registro de Nueva Simulación</h1>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold" id="userNameDisplay">Cargando...</span>
+                    <span class="text-xs text-gray-500">Asesor Bancario</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-10 max-w-5xl mx-auto w-full">
+            <div class="mb-8">
+                <div class="flex items-center gap-4 mb-2">
+                    <span class="bg-blue-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
+                    <h2 class="text-2xl font-bold text-gray-800">Datos del Cliente</h2>
+                </div>
+                <p class="text-gray-500 ml-12">Ingresa la información básica del cliente para asociar el crédito vehicular.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                <form id="clienteDataForm" class="grid grid-cols-2 gap-6">
+                    
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">DNI / RUC</label>
+                        <input type="text" id="clientDni" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="N° de documento">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Correo Electrónico</label>
+                        <input type="email" id="clientCorreo" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="cliente@correo.com">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Nombres</label>
+                        <input type="text" id="clientNombres" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Nombres completos">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Apellidos</label>
+                        <input type="text" id="clientApellidos" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Apellidos completos">
+                    </div>
+
+                    <div class="col-span-2 flex justify-end mt-4">
+                        <button type="submit" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-800 transition shadow-lg flex items-center gap-2">
+                            Siguiente: Parámetros del Vehículo
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="./js/asesor.js"></script>
+</body>
+</html>

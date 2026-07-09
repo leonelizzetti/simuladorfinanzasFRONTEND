@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Simulación - Smart Buy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
+
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div class="h-20 flex items-center px-8 border-b border-gray-100">
+            <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
+            <span class="font-bold text-xl tracking-tight">Smart Buy</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
+                <i class="fa-solid fa-file-invoice-dollar w-5"></i>
+                Nueva Simulación
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+                Historial
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-users w-5"></i>
+                Mis Clientes
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-100">
+            <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
+                Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
+            <h1 class="text-xl font-bold text-gray-800">Parámetros del Vehículo y Crédito</h1>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold" id="userNameDisplay">Asesor</span>
+                    <span class="text-xs text-gray-500" id="clientNameDisplay">Cliente: ---</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-10 max-w-5xl mx-auto w-full">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                <form id="simuladorForm" class="grid grid-cols-2 gap-6">
+                    
+                    <div class="col-span-2 text-lg font-bold text-blue-800 border-b pb-2 mb-2">1. Datos del Vehículo</div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Moneda</label>
+                        <select id="moneda" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                            <option value="Soles">Soles (S/)</option>
+                            <option value="Dolares">Dólares ($)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Precio del Vehículo</label>
+                        <input type="number" id="precioVehiculo" step="0.01" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">% Cuota Inicial</label>
+                        <input type="number" id="porcCuotaInicial" step="0.01" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none" placeholder="Ej: 20">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">% Cuota Final (Smart Buy)</label>
+                        <input type="number" id="porcCuotaFinal" step="0.01" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none" placeholder="Ej: 40">
+                    </div>
+
+                    <div class="col-span-2 text-lg font-bold text-blue-800 border-b pb-2 mt-4 mb-2">2. Condiciones del Crédito</div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Plazo Total (Meses)</label>
+                        <input type="number" id="plazoMeses" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Tipo de Gracia</label>
+                        <select id="tipoGracia" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                            <option value="Sin Gracia">Sin Gracia</option>
+                            <option value="Parcial">Gracia Parcial</option>
+                            <option value="Total">Gracia Total</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Tipo de Tasa</label>
+                        <select id="tipoTasa" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                            <option value="Efectiva">Efectiva</option>
+                            <option value="Nominal">Nominal</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Tasa de Interés (%)</label>
+                        <input type="number" id="tasaInteres" step="0.0001" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">Frecuencia de Capitalización (Solo Nominal)</label>
+                        <input type="number" id="periodoCapitalizacion" value="12" class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                    </div>
+
+                    <div class="col-span-2 text-lg font-bold text-blue-800 border-b pb-2 mt-4 mb-2">3. Seguros y Gastos</div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">% Seguro Desgravamen Mensual</label>
+                        <input type="number" id="seguroDesgravamen" step="0.0001" value="0.05" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-gray-700">% Seguro Vehicular Anual</label>
+                        <input type="number" id="seguroVehicular" step="0.01" value="3.5" required class="px-4 py-3 border border-gray-300 rounded-lg outline-none">
+                    </div>
+
+                    <p id="errorMessage" class="col-span-2 text-red-500 text-sm font-semibold hidden"></p>
+
+                    <div class="col-span-2 flex justify-end mt-6">
+                        <button type="submit" id="btnSubmit" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-900 transition shadow-lg">
+                            Generar Cronograma
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="./js/simulador.js"></script>
+</body>
+</html>

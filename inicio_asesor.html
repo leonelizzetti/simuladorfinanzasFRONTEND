@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Buy Simulator - Inicio Asesor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { width: 100vw; height: 100vh; display: flex; background-color: #f4f7fc; overflow: hidden; }
+        .sidebar { width: 240px; background-color: #ffffff; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; padding: 25px 0; z-index: 10; }
+        .sidebar-top { display: flex; flex-direction: column; gap: 40px; }
+        .logo-container { display: flex; align-items: center; gap: 10px; padding-left: 24px; }
+        .logo-icon { color: #2b43b6; font-size: 20px; }
+        .logo-text { font-size: 16px; font-weight: 700; color: #0b1a30; }
+        .logo-text span { font-weight: 400; }
+        .nav-menu { display: flex; flex-direction: column; gap: 10px; }
+        .nav-link { display: block; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #4a5568; text-decoration: none; transition: all 0.2s; }
+        .nav-link.active { color: #3a47d5; background-color: #f0f4ff; border-left: 4px solid #3a47d5; padding-left: 20px; }
+        .nav-link:hover:not(.active) { color: #1a202c; background-color: #f7fafc; }
+        .logout-link { display: block; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #ef4444; text-decoration: none; cursor: pointer;}
+        .main-content { flex: 1; display: flex; flex-direction: column; height: 100%; overflow-y: auto; }
+        .top-header { background-color: #ffffff; padding: 15px 40px; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid #e2e8f0; }
+        .profile-widget { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .profile-img { width: 35px; height: 35px; background-color: #cbd5e1; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #718096; font-size: 18px; }
+        .profile-info { display: flex; flex-direction: column; text-align: left; }
+        .profile-name { font-size: 14px; font-weight: 600; color: #1a202c; }
+        .profile-role { font-size: 11px; color: #718096; }
+        .dashboard-body { padding: 30px 40px; display: flex; flex-direction: column; gap: 25px; }
+        .page-title h1 { font-size: 24px; color: #1a202c; font-weight: 600; margin-bottom: 4px; }
+        .page-title p { font-size: 13px; color: #718096; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .metric-card { background-color: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; text-align: left; }
+        .metric-card p { font-size: 12px; color: #718096; font-weight: 500; margin-bottom: 8px; }
+        .metric-card .value { font-size: 24px; font-weight: 700; }
+        .metric-card .value.blue { color: #2b43b6; }
+        .metric-card .value.green { color: #22c55e; }
+        .metric-card .value.red { color: #ef4444; }
+        .data-section { display: grid; grid-template-columns: 1fr; gap: 25px; }
+        .panel-box { background-color: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; }
+        .panel-box h3 { font-size: 14px; color: #1a202c; margin-bottom: 15px; font-weight: 600; }
+        .custom-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
+        .custom-table th { color: #718096; font-weight: 600; padding: 10px 8px; border-bottom: 1px solid #e2e8f0; }
+        .custom-table td { padding: 12px 8px; border-bottom: 1px solid #f7fafc; color: #2d3748; }
+        .status-badge { padding: 4px 10px; border-radius: 12px; font-weight: 600; font-size: 10px; display: inline-block; text-align: center; width: 80px; }
+        .status-badge.pendiente { background-color: #ffebeb; color: #ff5c5c; }
+        .status-badge.aprobado { background-color: #e6f9ed; color: #22c55e; }
+        .status-badge.revision { background-color: #e6f0fa; color: #3a86ff; }
+        .action-link { color: #3a47d5; text-decoration: none; font-weight: 500; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo-container">
+                <i class="fa-solid fa-car-side logo-icon"></i>
+                <span class="logo-text">Smart Buy <span>Simulator</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="inicio_asesor.html" class="nav-link active"><i class="fa-solid fa-house mr-2"></i> Inicio</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-file-signature mr-2"></i> Solicitudes</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-users mr-2"></i> Clientes</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-chart-pie mr-2"></i> Resultados</a>
+            </nav>
+        </div>
+        <a id="btnLogout" class="logout-link"><i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar Sesión</a>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="profile-widget">
+                <div class="profile-img"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="profile-info">
+                    <span class="profile-name" id="userNameDisplay">Asesor/Admin</span>
+                    <span class="profile-role" id="userRoleDisplay">Administrador</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-body">
+            <div class="page-title">
+                <h1 id="tituloDashboard">Inicio del Asesor/Admin</h1>
+                <p>Gestiona soluciones, aprueba simulaciones y acompaña a los clientes en su crédito vehicular.</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <p>Nuevas Solicitudes</p>
+                    <span class="value blue">12</span>
+                </div>
+                <div class="metric-card">
+                    <p>En Revisión</p>
+                    <span class="value">5</span>
+                </div>
+                <div class="metric-card">
+                    <p>Aprobadas (Mes)</p>
+                    <span class="value green">28</span>
+                </div>
+                <div class="metric-card">
+                    <p>Rechazadas</p>
+                    <span class="value red">3</span>
+                </div>
+            </div>
+
+            <div class="data-section">
+                <div class="panel-box">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <h3>Gestión de Solicitudes Recientes</h3>
+                        <a href="asesor.html" class="action-link bg-blue-50 px-3 py-1 rounded"><i class="fa-solid fa-plus mr-1"></i> Registrar Cliente</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Vehículo</th>
+                                    <th>Monto a Financiar</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaSolicitudesAdmin">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="./js/inicio.js"></script>
+</body>
+</html>
