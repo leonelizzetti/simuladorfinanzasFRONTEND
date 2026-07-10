@@ -11,12 +11,12 @@
 
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity md:hidden"></div>
 
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0 overflow-y-auto">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100 shrink-0">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
         </div>
-        <nav class="flex-1 px-4 py-6 space-y-2">
+        <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-2">
             <a href="inicio_cliente.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
                 <i class="fa-solid fa-house w-5"></i> Inicio
             </a>
@@ -27,7 +27,7 @@
                 <i class="fa-solid fa-list w-5"></i> Mis Simulaciones
             </a>
         </nav>
-        <div class="p-4 border-t border-gray-100 shrink-0">
+        <div class="p-4 border-t border-gray-100 shrink-0 mt-auto">
             <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
                 <i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión
             </button>
