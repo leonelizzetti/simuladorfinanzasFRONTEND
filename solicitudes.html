@@ -16,8 +16,8 @@
         <nav class="flex-1 px-4 py-6 space-y-2">
             <a href="inicio_asesor.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-house w-5"></i> Inicio</a>
             <a href="solicitudes.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-file-signature w-5"></i> Solicitudes</a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-users w-5"></i> Clientes</a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-5"></i> Resultados</a>
+            <a href="clientes.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-users w-5"></i> Clientes</a>
+            <a href="resultados_asesor.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-5"></i> Resultados</a>
         </nav>
         <div class="p-4 border-t border-gray-100">
             <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition"><i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión</button>
@@ -36,16 +36,17 @@
         </header>
         <div class="p-10 mx-auto w-full max-w-7xl">
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden p-6">
-                <div class="flex justify-end mb-4"><a href="asesor.html" class="bg-blue-700 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-800"><i class="fa-solid fa-plus mr-2"></i>Nueva Solicitud</a></div>
+                
                 <table class="w-full text-left text-sm whitespace-nowrap">
                     <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-semibold">
                         <tr><th>ID</th><th>Cliente</th><th>Vehículo</th><th>Monto a Financiar</th><th>Estado</th><th>Acciones</th></tr>
                     </thead>
-                    <tbody id="tablaSolicitudes" class="divide-y divide-gray-100 text-gray-700"></tbody>
+                    <tbody id="tablaSolicitudesAsesor" class="divide-y divide-gray-100 text-gray-700"></tbody>
                 </table>
             </div>
         </div>
     </main>
-    <script src="./js/tablas.js"></script>
+    <script src="./js/config.js"></script>
+    <script src="./js/panel_asesor.js"></script>
 </body>
 </html>

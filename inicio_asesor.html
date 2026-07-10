@@ -4,135 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Buy Simulator - Inicio Asesor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { width: 100vw; height: 100vh; display: flex; background-color: #f4f7fc; overflow: hidden; }
-        .sidebar { width: 240px; background-color: #ffffff; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; padding: 25px 0; z-index: 10; }
-        .sidebar-top { display: flex; flex-direction: column; gap: 40px; }
-        .logo-container { display: flex; align-items: center; gap: 10px; padding-left: 24px; }
-        .logo-icon { color: #2b43b6; font-size: 20px; }
-        .logo-text { font-size: 16px; font-weight: 700; color: #0b1a30; }
-        .logo-text span { font-weight: 400; }
-        .nav-menu { display: flex; flex-direction: column; gap: 10px; }
-        .nav-link { display: block; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #4a5568; text-decoration: none; transition: all 0.2s; }
-        .nav-link.active { color: #3a47d5; background-color: #f0f4ff; border-left: 4px solid #3a47d5; padding-left: 20px; }
-        .nav-link:hover:not(.active) { color: #1a202c; background-color: #f7fafc; }
-        .logout-link { display: block; padding: 12px 24px; font-size: 14px; font-weight: 600; color: #ef4444; text-decoration: none; cursor: pointer;}
-        .main-content { flex: 1; display: flex; flex-direction: column; height: 100%; overflow-y: auto; }
-        .top-header { background-color: #ffffff; padding: 15px 40px; display: flex; justify-content: flex-end; align-items: center; border-bottom: 1px solid #e2e8f0; }
-        .profile-widget { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .profile-img { width: 35px; height: 35px; background-color: #cbd5e1; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #718096; font-size: 18px; }
-        .profile-info { display: flex; flex-direction: column; text-align: left; }
-        .profile-name { font-size: 14px; font-weight: 600; color: #1a202c; }
-        .profile-role { font-size: 11px; color: #718096; }
-        .dashboard-body { padding: 30px 40px; display: flex; flex-direction: column; gap: 25px; }
-        .page-title h1 { font-size: 24px; color: #1a202c; font-weight: 600; margin-bottom: 4px; }
-        .page-title p { font-size: 13px; color: #718096; }
-        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .metric-card { background-color: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; text-align: left; }
-        .metric-card p { font-size: 12px; color: #718096; font-weight: 500; margin-bottom: 8px; }
-        .metric-card .value { font-size: 24px; font-weight: 700; }
-        .metric-card .value.blue { color: #2b43b6; }
-        .metric-card .value.green { color: #22c55e; }
-        .metric-card .value.red { color: #ef4444; }
-        .data-section { display: grid; grid-template-columns: 1fr; gap: 25px; }
-        .panel-box { background-color: #ffffff; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; }
-        .panel-box h3 { font-size: 14px; color: #1a202c; margin-bottom: 15px; font-weight: 600; }
-        .custom-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
-        .custom-table th { color: #718096; font-weight: 600; padding: 10px 8px; border-bottom: 1px solid #e2e8f0; }
-        .custom-table td { padding: 12px 8px; border-bottom: 1px solid #f7fafc; color: #2d3748; }
-        .status-badge { padding: 4px 10px; border-radius: 12px; font-weight: 600; font-size: 10px; display: inline-block; text-align: center; width: 80px; }
-        .status-badge.pendiente { background-color: #ffebeb; color: #ff5c5c; }
-        .status-badge.aprobado { background-color: #e6f9ed; color: #22c55e; }
-        .status-badge.revision { background-color: #e6f0fa; color: #3a86ff; }
-        .action-link { color: #3a47d5; text-decoration: none; font-weight: 500; cursor: pointer; }
-    </style>
 </head>
-<body>
+<body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
     <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
-        <div class="sidebar-top">
-            <div class="logo-container">
-                <i class="fa-solid fa-car-side logo-icon"></i>
-                <span class="logo-text">Smart Buy <span>Simulator</span></span>
-            </div>
-            <nav class="nav-menu">
-                <a href="inicio_asesor.html" class="nav-link active"><i class="fa-solid fa-house mr-2"></i> Inicio</a>
-                <a href="solicitudes.html" class="nav-link"><i class="fa-solid fa-file-signature mr-2"></i> Solicitudes</a>
-                <a href="#" class="nav-link"><i class="fa-solid fa-users mr-2"></i> Clientes</a>
-                <a href="resultados.html" class="nav-link"><i class="fa-solid fa-chart-pie mr-2"></i> Resultados</a>
-            </nav>
+        <div class="h-20 flex items-center px-8 border-b border-gray-100">
+            <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
+            <span class="font-bold text-xl tracking-tight">Smart Buy</span>
         </div>
-        <a id="btnLogout" class="logout-link"><i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar Sesión</a>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="inicio_asesor.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-house w-5"></i> Inicio</a>
+            <a href="solicitudes.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-file-signature w-5"></i> Solicitudes</a>
+            <a href="clientes.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-users w-5"></i> Clientes</a>
+            <a href="resultados_asesor.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-5"></i> Resultados</a>
+        </nav>
+        <div class="p-4 border-t border-gray-100">
+            <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition"><i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión</button>
+        </div>
     </aside>
 
-    <main class="main-content">
-        <header class="top-header">
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
             <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-bars"></i>
             </button>
-            <div class="profile-widget">
-                <div class="profile-img"><i class="fa-solid fa-user-tie"></i></div>
-                <div class="profile-info">
-                    <span class="profile-name" id="userNameDisplay">Asesor/Admin</span>
-                    <span class="profile-role" id="userRoleDisplay">Administrador</span>
+            <h1 class="text-xl font-bold text-gray-800 hidden md:block">Inicio del Asesor/Admin</h1>
+            <div class="flex items-center gap-4 ml-auto">
+                <div class="flex flex-col text-right">
+                    <span class="text-sm font-bold text-gray-800" id="userNameDisplay">Asesor</span>
+                    <span class="text-xs text-gray-500">Asesor Bancario</span>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+                    <i class="fa-solid fa-user-tie"></i>
                 </div>
             </div>
         </header>
 
-        <div class="dashboard-body">
-            <div class="page-title">
-                <h1 id="tituloDashboard">Inicio del Asesor/Admin</h1>
-                <p>Gestiona soluciones, aprueba simulaciones y acompaña a los clientes en su crédito vehicular.</p>
+        <div class="p-10 mx-auto w-full max-w-7xl flex flex-col gap-8">
+            <div class="mb-2">
+                <h2 class="text-2xl font-bold text-gray-800">Bienvenido al Panel de Control</h2>
+                <p class="text-sm text-gray-500 mt-1">Gestiona soluciones, aprueba simulaciones y acompaña a los clientes en su crédito vehicular.</p>
             </div>
 
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <p>Nuevas Solicitudes</p>
-                    <span class="value blue">12</span>
+            <div class="grid grid-cols-4 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs text-gray-500 font-semibold mb-1 uppercase">Nuevas Solicitudes / Pendientes</p>
+                    <span class="text-2xl font-bold text-orange-500" id="statAsesorPendientes">0</span>
                 </div>
-                <div class="metric-card">
-                    <p>En Revisión</p>
-                    <span class="value">5</span>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs text-gray-500 font-semibold mb-1 uppercase">Créditos Aprobados</p>
+                    <span class="text-2xl font-bold text-green-500" id="statAsesorAprobados">0</span>
                 </div>
-                <div class="metric-card">
-                    <p>Aprobadas (Mes)</p>
-                    <span class="value green">28</span>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs text-gray-500 font-semibold mb-1 uppercase">Créditos Rechazados</p>
+                    <span class="text-2xl font-bold text-red-500" id="statAsesorRechazados">0</span>
                 </div>
-                <div class="metric-card">
-                    <p>Rechazadas</p>
-                    <span class="value red">3</span>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-xs text-gray-500 font-semibold mb-1 uppercase">Monto Total Solicitado</p>
+                    <span class="text-2xl font-bold text-blue-700" id="statAsesorMontoTotal">S/ 0.00</span>
                 </div>
             </div>
 
-            <div class="data-section">
-                <div class="panel-box">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                        <h3>Gestión de Solicitudes Recientes</h3>
-                        <a href="asesor.html" class="action-link bg-blue-50 px-3 py-1 rounded"><i class="fa-solid fa-plus mr-1"></i> Registrar Cliente</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="custom-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Cliente</th>
-                                    <th>Vehículo</th>
-                                    <th>Monto a Financiar</th>
-                                    <th>Estado</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaSolicitudesAdmin">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-gray-800 text-base">Gestión de Solicitudes Recientes</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-semibold text-xs">
+                            <tr>
+                                <th class="px-5 py-3">ID</th>
+                                <th class="px-5 py-3">Cliente</th>
+                                <th class="px-5 py-3">Vehículo</th>
+                                <th class="px-5 py-3">Monto a Financiar</th>
+                                <th class="px-5 py-3">Estado</th>
+                                <th class="px-5 py-3">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaSolicitudesAdmin" class="divide-y divide-gray-100 text-gray-700">
                             </tbody>
-                        </table>
-                    </div>
+                    </table>
                 </div>
             </div>
         </div>
     </main>
+
     <script src="./js/config.js"></script>
-    <script src="./js/inicio.js"></script>
+    <script src="./js/panel_asesor.js"></script>
 </body>
 </html>

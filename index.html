@@ -4,28 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Buy Simulator - Iniciar Sesión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
-            width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #e6eff9;
+            width: 100%; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center;  align-items: center; background-color: #e6eff9;
             background: linear-gradient(135deg, rgba(230,239,249,1) 0%, rgba(200,218,241,1) 100%);
             background-image: url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2000&auto=format&fit=crop'), linear-gradient(180deg, #ffffff 0%, #cbdcf2 100%);
-            background-repeat: no-repeat; background-position: center bottom; background-size: cover;
-            position: relative; overflow: hidden;
+            background-repeat: no-repeat; background-position: center bottom; background-size: cover; position: relative; 
         }
-        body::before {
-            content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 140px;
-            background: linear-gradient(transparent, rgba(58, 95, 219, 0.1));
-            border-top: 2px solid rgba(58, 95, 219, 0.2); transform: skewY(-1.5deg); transform-origin: bottom left; z-index: 1;
+        main {
+            margin: 0.5rem 0rem;
         }
-        .header-logo { position: absolute; top: 25px; left: 40px; display: flex; align-items: center; gap: 10px; z-index: 10; }
+        .header-logo { position: sticky; top: 0; width: 100%; display: flex; align-items: center; gap: 10px; z-index: 10; padding: 1rem; background-color: #fefefe }
         .logo-icon { color: #2b43b6; font-size: 24px; display: flex; gap: 4px; }
         .logo-text { font-size: 20px; font-weight: 700; color: #0b1a30; }
         .logo-text span { font-weight: 400; }
-        .login-container { display: flex; justify-content: center; align-items: center; width: 100%; max-width: 1200px; padding: 0 50px; z-index: 5; }
-        .login-card { background: #ffffff; width: 100%; max-width: 480px; border-radius: 8px; padding: 40px 45px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); border: 1px solid #e1e8f0; text-align: center; }
+        .login-container { display: flex; justify-content: center; align-items: center; width: 100%; max-width: 1200px; z-index: 5; padding: 1rem; }
+        .login-card { background: #ffffff; width: 100%; max-width: 480px; border-radius: 8px; padding: 1rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); border: 1px solid #e1e8f0; text-align: center; }
         .login-card h2 { font-size: 32px; color: #000000; font-weight: 500; margin-bottom: 6px; }
         .login-card .subtitle { font-size: 11px; color: #7d8b99; margin-bottom: 30px; line-height: 1.4; }
         .input-group { text-align: left; margin-bottom: 22px; }
@@ -46,14 +44,16 @@
         .link-footer { font-size: 11px; color: #3a47d5; text-decoration: none; font-weight: 500; }
         .link-footer:hover { text-decoration: underline; }
         .error-msg { color: #dc2626; font-size: 12px; font-weight: 600; margin-bottom: 15px; display: none; }
+        .captcha {display: flex; justify-content: center; margin-bottom: 1rem;}
+        @media screen and (min-width: 768px) {
+        .login-container { padding: 0 50px; }
+        .login-card { padding: 2rem 3rem;}
+        }
     </style>
 </head>
 <body>
 
     <header class="header-logo">
-        <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars"></i>
-            </button>
         <div class="logo-icon"><i class="fa-solid fa-car-side"></i></div>
         <span class="logo-text">Smart Buy <span>Simulator</span></span>
     </header>
@@ -86,7 +86,9 @@
                     </label>
                 </div>
                 
-                <div class="g-recaptcha" data-sitekey="6LczNkstAAAAAIxnWYDavuGPl_GVlxyysibqSt-g" style="margin-bottom: 20px;"></div>
+                <div class="captcha">
+                    <div class="g-recaptcha" data-sitekey="6LczNkstAAAAAIxnWYDavuGPl_GVlxyysibqSt-g"></div>
+                </div>
 
                 <p id="errorMessage" class="error-msg"></p>
 

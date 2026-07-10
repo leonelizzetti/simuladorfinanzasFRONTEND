@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Solicitud - Smart Buy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800">
+
+    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-slate-200 flex-col shrink-0">
+        <div class="h-20 flex items-center px-8 border-b border-slate-100">
+            <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
+            <span class="font-bold text-xl tracking-tight text-slate-800">Smart Buy</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="inicio_asesor.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-house w-5"></i> Inicio</a>
+            <a href="solicitudes.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-file-signature w-5"></i> Solicitudes</a>
+            <a href="clientes.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-users w-5"></i> Clientes</a>
+            <a href="resultados_asesor.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-5"></i> Resultados</a>
+        </nav>
+        <div class="p-4 border-t border-slate-100">
+            <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition"><i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-10 shrink-0">
+            <div class="flex items-center gap-4">
+                <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl"><i class="fa-solid fa-bars"></i></button>
+                <div class="text-sm text-slate-500"><a href="solicitudes.html" class="hover:text-blue-600">Mis Solicitudes</a> / <span class="font-semibold text-slate-700">Detalle</span></div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex flex-col text-right">
+                    <span class="text-sm font-bold text-slate-800" id="userNameDisplay">Asesor</span>
+                    <span class="text-xs text-slate-500">Asesor Bancario</span>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold"><i class="fa-solid fa-user-tie"></i></div>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-7xl mx-auto w-full">
+            
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900 mb-1">Detalle de solicitud de crédito</h1>
+                    <p class="text-sm text-slate-500">Revisa los datos, la simulación financiera y decide si aprobar o rechazar la solicitud.</p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="solicitudes.html" class="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg text-sm font-bold hover:bg-slate-50 transition"><i class="fa-solid fa-chevron-left mr-2"></i>Volver</a>
+                    <button id="btnAprobar" class="px-4 py-2 border border-green-500 text-green-600 bg-green-50 rounded-lg text-sm font-bold hover:bg-green-100 transition">Aprobar crédito</button>
+                    <button id="btnRechazar" class="px-4 py-2 border border-red-500 text-red-600 bg-red-50 rounded-lg text-sm font-bold hover:bg-red-100 transition">Rechazar crédito</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <h2 class="text-sm font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Datos del vehículo y Cliente</h2>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between"><span class="text-slate-500">ID Simulación:</span> <span class="font-medium text-slate-800" id="lblIdSimulacion">Cargando...</span></li>
+                        <li class="flex justify-between"><span class="text-slate-500">Estado Actual:</span> <span id="lblEstado" class="text-orange-500 font-bold bg-orange-50 px-2 py-0.5 rounded">Cargando...</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                    <h2 class="text-sm font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Datos de la simulación</h2>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+                        <div class="flex flex-col"><span class="text-slate-500 text-xs">Monto financiado:</span> <span class="font-medium text-slate-800" id="lblMontoFinanciado">Cargando...</span></div>
+                        <div class="flex flex-col"><span class="text-slate-500 text-xs">Plazo:</span> <span class="font-medium text-slate-800" id="lblPlazo">Cargando...</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-5 border-b border-slate-100 pb-3">
+                    <h2 class="text-base font-bold text-slate-800">Resultados financieros</h2>
+                </div>
+                
+                <div class="grid grid-cols-6 gap-4 mb-6">
+                    <div>
+                        <div class="text-[11px] font-semibold text-slate-500 uppercase">Cuota mensual</div>
+                        <div class="text-lg font-bold text-slate-900" id="lblCuotaMensual">Cargando...</div>
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-semibold text-slate-500 uppercase">TCEA</div>
+                        <div class="text-lg font-bold text-slate-900" id="lblTCEA">Cargando...</div>
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-semibold text-slate-500 uppercase">VAN</div>
+                        <div class="text-lg font-bold text-red-500" id="lblVAN">Cargando...</div>
+                    </div>
+                    <div>
+                        <div class="text-[11px] font-semibold text-slate-500 uppercase">TIR</div>
+                        <div class="text-lg font-bold text-slate-900" id="lblTIR">Cargando...</div>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 h-64">
+                    <div class="flex-1 border border-slate-100 rounded-lg p-3 bg-slate-50/50">
+                        <h3 class="text-xs font-bold text-slate-700 mb-2">Evolución del saldo (S/)</h3>
+                        <div class="relative w-full h-48">
+                            <canvas id="evolucionAsesorCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/detalle_solicitud.js"></script>
+</body>
+</html>

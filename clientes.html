@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes Registrados - Smart Buy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800">
+
+    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-slate-200 flex-col shrink-0">
+        <div class="h-20 flex items-center px-8 border-b border-slate-100">
+            <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
+            <span class="font-bold text-xl tracking-tight text-slate-800">Smart Buy</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="inicio_asesor.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-house w-5"></i> Inicio</a>
+            <a href="solicitudes.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-file-signature w-5"></i> Solicitudes</a>
+            <a href="clientes.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-users w-5"></i> Clientes</a>
+            <a href="resultados_asesor.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-5"></i> Resultados</a>
+        </nav>
+        <div class="p-4 border-t border-slate-100">
+            <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition"><i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión</button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-10 shrink-0">
+            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl"><i class="fa-solid fa-bars"></i></button>
+            <h1 class="text-xl font-bold text-slate-800 hidden md:block">Directorio de Clientes</h1>
+            <div class="flex items-center gap-4 ml-auto">
+                <div class="flex flex-col text-right">
+                    <span class="text-sm font-bold text-slate-800" id="userNameDisplay">Asesor</span>
+                    <span class="text-xs text-slate-500">Asesor Bancario</span>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold overflow-hidden"><i class="fa-solid fa-user"></i></div>
+            </div>
+        </header>
+
+        <div class="p-8 max-w-7xl mx-auto w-full">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-slate-900 mb-1">Clientes y registros</h1>
+                <p class="text-sm text-slate-500">Consulta los datos de las operaciones y el estado de sus solicitudes en el sistema.</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xs text-slate-500 font-semibold mb-1 uppercase">Total de operaciones</h3>
+                    <p class="text-2xl font-bold text-blue-600" id="statClientesTotal">0</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xs text-slate-500 font-semibold mb-1 uppercase">Aprobados</h3>
+                    <p class="text-2xl font-bold text-green-500" id="statClientesAprobados">0</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xs text-slate-500 font-semibold mb-1 uppercase">Pendientes</h3>
+                    <p class="text-2xl font-bold text-orange-500" id="statClientesPendientes">0</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xs text-slate-500 font-semibold mb-1 uppercase">Rechazados</h3>
+                    <p class="text-2xl font-bold text-red-500" id="statClientesRechazados">0</p>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-xs">
+                        <tr>
+                            <th class="px-5 py-3">ID Simulación</th>
+                            <th class="px-5 py-3">ID Usuario</th>
+                            <th class="px-5 py-3">Moneda</th>
+                            <th class="px-5 py-3">Monto Financiado</th>
+                            <th class="px-5 py-3">Estado</th>
+                            <th class="px-5 py-3 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaDirectorioClientes" class="divide-y divide-slate-100 text-slate-700"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="./js/config.js"></script>
+    <script src="./js/panel_asesor.js"></script>
+</body>
+</html>
