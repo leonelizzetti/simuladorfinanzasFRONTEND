@@ -9,8 +9,8 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
-    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
-        <div class="h-20 flex items-center px-8 border-b border-gray-100">
+    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0 overflow-y-auto">
+        <div class="h-20 flex items-center px-8 border-b border-gray-100 shrink-0">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
         </div>
@@ -20,7 +20,7 @@
             <a href="clientes.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-users w-5"></i> Clientes</a>
             <a href="resultados_asesor.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-5"></i> Resultados</a>
         </nav>
-        <div class="p-4 border-t border-gray-100">
+        <div class="p-4 border-t border-gray-100 shrink-0">
             <button id="btnLogout" class="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-50 rounded-lg font-medium transition"><i class="fa-solid fa-arrow-right-from-bracket w-5"></i> Cerrar Sesión</button>
         </div>
     </aside>
@@ -84,7 +84,7 @@
                             </tr>
                         </thead>
                         <tbody id="tablaSolicitudesAdmin" class="divide-y divide-gray-100 text-gray-700">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
