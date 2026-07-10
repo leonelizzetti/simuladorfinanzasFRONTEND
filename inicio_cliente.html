@@ -9,9 +9,9 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity md:hidden"></div>
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity lg:hidden"></div>
 
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 lg:relative lg:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100 shrink-0">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
@@ -35,8 +35,8 @@
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
-        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between md:justify-end px-4 md:px-10 shrink-0">
-            <button onclick="toggleMenu()" class="md:hidden text-2xl text-gray-600 focus:outline-none">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between lg:justify-end px-4 lg:px-10 shrink-0">
+            <button onclick="toggleMenu()" class="lg:hidden text-2xl text-gray-600 focus:outline-none">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center gap-4">
