@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Obtener el ID de la URL (ej: detalle_solicitud.html?id=15)
     const urlParams = new URLSearchParams(window.location.search);
     const idSimulacion = urlParams.get('id');
 

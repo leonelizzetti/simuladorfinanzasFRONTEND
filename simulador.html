@@ -10,7 +10,9 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-700">
 
-    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity md:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-slate-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight text-slate-800">Smart Buy</span>
@@ -23,10 +25,10 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between md:justify-end px-10 shrink-0">
-            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars"></i>
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between md:justify-end px-4 md:px-10 shrink-0">
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-gray-600 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center gap-4">
                 <div class="flex flex-col text-right">
@@ -39,7 +41,7 @@
             </div>
         </header>
 
-        <div class="p-8 max-w-7xl mx-auto w-full">
+        <div class="p-4 md:p-8 max-w-7xl mx-auto w-full">
             
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-slate-900 mb-1">Nueva Simulación de crédito vehicular</h1>
@@ -48,24 +50,24 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 mb-6">
                 
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm">
                     <h2 class="text-base font-bold text-slate-800 mb-5">Datos de la simulación</h2>
                     
-                    <form id="simuladorForm" class="grid grid-cols-4 gap-x-4 gap-y-5">
+                    <form id="simuladorForm" class="grid grid-cols-1 sm:grid-cols-4 gap-x-4 gap-y-5">
                         
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Moneda</label>
                             <select id="moneda" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
                                 <option value="Soles">Soles (S/)</option>
                                 <option value="Dolares">Dólares ($)</option>
                             </select>
                         </div>
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Plazo (Meses)</label>
                             <input type="number" id="plazoMeses" value="36" required class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
                         </div>
 
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Precio de vehículo</label>
                             <div class="relative flex items-center">
                                 <span id="iconoMoneda" class="absolute left-3 text-slate-400 text-sm font-medium">S/</span>
@@ -87,14 +89,14 @@
                             </div>
                         </div>
 
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Tasa de interés</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="tasaInteres" step="0.01" value="12" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
                                 <span class="absolute right-3 text-slate-400 text-sm font-medium">%</span>
                             </div>
                         </div>
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Tipo de tasa</label>
                             <select id="tipoTasa" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
                                 <option value="Efectiva">Efectiva</option>
@@ -114,7 +116,7 @@
                             <label class="text-xs font-semibold text-slate-700">Meses Gracia</label>
                             <input type="number" id="mesesGracia" value="0" disabled class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-slate-100 text-slate-400">
                         </div>
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Capitalización (Nominal)</label>
                             <select id="periodoCapitalizacion" class="w-full h-10 px-3 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600 bg-white">
                                 <option value="30">Mensual</option>
@@ -122,7 +124,7 @@
                             </select>
                         </div>
 
-                        <div class="col-span-2 flex flex-col gap-1.5">
+                        <div class="col-span-1 sm:col-span-2 flex flex-col gap-1.5">
                             <label class="text-xs font-semibold text-slate-700">Seguro desgravamen mensual</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="seguroDesgravamen" step="0.001" value="0.05" required class="w-full h-10 pl-3 pr-7 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-600">
@@ -143,19 +145,19 @@
                             </div>
                         </div>
 
-                        <p id="errorMessage" class="col-span-4 text-red-500 text-xs font-bold text-center hidden"></p>
+                        <p id="errorMessage" class="col-span-1 sm:col-span-4 text-red-500 text-xs font-bold text-center hidden"></p>
 
-                        <div class="col-span-4 flex justify-center gap-3 mt-4">
+                        <div class="col-span-1 sm:col-span-4 flex flex-col sm:flex-row justify-center gap-3 mt-4">
                             <button type="button" id="btnSimular" class="h-10 px-6 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition">Simular</button>
                             <button type="button" id="btnGuardar" class="h-10 px-6 bg-white border border-slate-300 text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition hidden">Guardar simulación</button>
                         </div>
                     </form>
                 </div>
 
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col">
+                <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm flex flex-col">
                     <h2 class="text-base font-bold text-slate-800 mb-5">Resultados de la simulación</h2>
                     
-                    <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
                         <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
                             <div class="text-[11px] font-semibold text-slate-500 mb-1 uppercase tracking-wide">Cuota mensual</div>
                             <div class="text-sm font-bold text-slate-900" id="resCuota">S/ 0.00</div>
@@ -191,10 +193,10 @@
                 </div>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hidden" id="cronogramaContainer">
+            <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm hidden" id="cronogramaContainer">
                 <h2 class="text-base font-bold text-slate-800 mb-4">Cronograma de pagos</h2>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
+                    <table class="w-full text-left text-xs min-w-[800px]">
                         <thead class="text-slate-500 border-b-2 border-slate-200">
                             <tr>
                                 <th class="pb-3 px-2 font-semibold">N°</th>
@@ -225,6 +227,14 @@
         } else {
             menu.innerHTML = `<a href="inicio_cliente.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-house w-5"></i> Inicio</a> <a href="simulador.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium"><i class="fa-solid fa-file-invoice-dollar w-5"></i> Nueva Simulación</a> <a href="mis_simulaciones.html" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 rounded-lg font-medium transition"><i class="fa-solid fa-list w-5"></i> Mis Simulaciones</a>`;
         }
+
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleMenu);
     </script>
     <script src="./js/config.js"></script>
     <script src="./js/inicio.js"></script>

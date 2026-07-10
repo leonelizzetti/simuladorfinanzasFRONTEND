@@ -9,21 +9,27 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
-    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity md:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
         </div>
         <nav class="flex-1 px-4 py-6 space-y-2">
-            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
+            <a href="inicio_asesor.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-house w-5"></i>
+                Inicio
+            </a>
+            <a href="asesor.html" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
                 <i class="fa-solid fa-file-invoice-dollar w-5"></i>
                 Nueva Simulación
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
-                <i class="fa-solid fa-clock-rotate-left w-5"></i>
-                Historial
+            <a href="solicitudes.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+                <i class="fa-solid fa-folder-open w-5"></i>
+                Solicitudes
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
+            <a href="directorio.html" class="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium transition">
                 <i class="fa-solid fa-users w-5"></i>
                 Mis Clientes
             </a>
@@ -36,13 +42,13 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
-            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars"></i>
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-10 shrink-0">
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-gray-600 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
             </button>
-            <h1 class="text-xl font-bold text-gray-800">Registro de Nueva Simulación</h1>
-            <div class="flex items-center gap-4">
+            <h1 class="text-xl font-bold text-gray-800 hidden sm:block">Registro de Nueva Simulación</h1>
+            <div class="flex items-center gap-4 ml-auto sm:ml-0">
                 <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
                     <i class="fa-solid fa-user-tie"></i>
                 </div>
@@ -53,17 +59,17 @@
             </div>
         </header>
 
-        <div class="p-10 max-w-5xl mx-auto w-full">
+        <div class="p-4 md:p-10 max-w-5xl mx-auto w-full">
             <div class="mb-8">
                 <div class="flex items-center gap-4 mb-2">
                     <span class="bg-blue-700 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
-                    <h2 class="text-2xl font-bold text-gray-800">Datos del Cliente</h2>
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800">Datos del Cliente</h2>
                 </div>
-                <p class="text-gray-500 ml-12">Ingresa la información básica del cliente para asociar el crédito vehicular.</p>
+                <p class="text-gray-500 ml-12 text-sm md:text-base">Ingresa la información básica del cliente para asociar el crédito vehicular.</p>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-                <form id="clienteDataForm" class="grid grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
+                <form id="clienteDataForm" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     
                     <div class="flex flex-col gap-2">
                         <label class="text-sm font-semibold text-gray-700">DNI / RUC</label>
@@ -85,8 +91,8 @@
                         <input type="text" id="clientApellidos" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Apellidos completos">
                     </div>
 
-                    <div class="col-span-2 flex justify-end mt-4">
-                        <button type="submit" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-800 transition shadow-lg flex items-center gap-2">
+                    <div class="col-span-1 sm:col-span-2 flex justify-end mt-4">
+                        <button type="submit" class="w-full sm:w-auto bg-blue-700 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-800 transition shadow-lg flex items-center justify-center gap-2">
                             Siguiente: Parámetros del Vehículo
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
@@ -96,6 +102,16 @@
         </div>
     </main>
 
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleMenu);
+    </script>
+    <script src="./js/config.js"></script>
     <script src="./js/asesor.js"></script>
 </body>
 </html>

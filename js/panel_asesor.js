@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok && data.exito) {
             const simulaciones = data.datos || [];
             
-            // Invocamos explícitamente cada función de actualización
             actualizarInicioAsesor(simulaciones);
             llenarTablaSolicitudes(simulaciones);
             actualizarDirectorioClientes(simulaciones);
@@ -38,9 +37,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+function obtenerIdentificadorCliente(sim) {
+    const nombreCompleto = (sim.nombres && sim.apellidos) 
+        ? `${sim.nombres} ${sim.apellidos}` 
+        : `Cliente #${sim.id_usuario}`;
+        
+    return `
+        <div class="flex flex-col">
+            <span class="font-bold text-blue-700">${nombreCompleto.toUpperCase()}</span>
+        </div>
+    `;
+}
+
 function actualizarInicioAsesor(simulaciones) {
     const tbody = document.getElementById('tablaSolicitudesAdmin');
-    if (!tbody) return; // Si no estamos en inicio_asesor.html, no hace nada aquí
+    if (!tbody) return;
 
     const pendientes = simulaciones.filter(s => !s.estado || s.estado === 'Pendiente');
     const aprobados = simulaciones.filter(s => s.estado === 'Aprobado');
@@ -64,11 +75,12 @@ function actualizarInicioAsesor(simulaciones) {
         const estado = sim.estado || 'Pendiente';
         const badgeClass = estado === 'Aprobado' ? 'aprobado' : estado === 'Rechazado' ? 'pendiente' : 'revision';
         const simbolo = sim.moneda === 'Soles' ? 'S/' : '$';
+        const idCliente = obtenerIdentificadorCliente(sim);
         
         tbody.innerHTML += `
             <tr class="hover:bg-slate-50 transition border-b border-gray-100 text-sm">
-                <td class="px-5 py-4 font-mono text-xs">#${sim.id_simulacion}</td>
-                <td class="px-5 py-4">Cliente #${sim.id_usuario}</td>
+                <td class="px-5 py-4 font-mono text-xs text-gray-500">#${sim.id_simulacion}</td>
+                <td class="px-5 py-4 font-medium text-blue-700">${idCliente}</td>
                 <td class="px-5 py-4 font-medium text-gray-800">Auto Cotizado</td>
                 <td class="px-5 py-4 font-bold text-gray-800">${simbolo} ${parseFloat(sim.monto_financiar || 0).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                 <td class="px-5 py-4"><span class="status-badge ${badgeClass}">${estado}</span></td>
@@ -93,11 +105,12 @@ function llenarTablaSolicitudes(simulaciones) {
         const colorEstado = estadoLabel === 'Aprobado' ? 'bg-green-100 text-green-700' : 
                             estadoLabel === 'Rechazado' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-600';
         const simbolo = sim.moneda === 'Soles' ? 'S/' : '$';
+        const idCliente = obtenerIdentificadorCliente(sim);
 
         tbody.innerHTML += `
             <tr class="hover:bg-slate-50 border-b border-slate-100 text-sm">
                 <td class="px-4 py-4 font-mono text-gray-500 text-xs">#${sim.id_simulacion}</td>
-                <td class="px-4 py-4">Cliente #${sim.id_usuario}</td>
+                <td class="px-4 py-4 font-medium text-blue-700">${idCliente}</td>
                 <td class="px-4 py-4 font-medium text-gray-800">Auto Cotizado</td>
                 <td class="px-4 py-4 font-bold text-gray-800">${simbolo} ${parseFloat(sim.monto_financiar).toLocaleString('es-PE', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                 <td class="px-4 py-4"><span class="px-2 py-1 ${colorEstado} text-xs font-bold rounded">${estadoLabel}</span></td>
@@ -124,14 +137,16 @@ function actualizarDirectorioClientes(simulaciones) {
     simulaciones.forEach(sim => {
         const estado = sim.estado || 'Pendiente';
         const simbolo = sim.moneda === 'Soles' ? 'S/' : '$';
+        const idCliente = obtenerIdentificadorCliente(sim);
+
         tbody.innerHTML += `
-            <tr class="hover:bg-slate-50 text-sm">
-                <td class="px-5 py-4 font-mono text-xs">#${sim.id_simulacion}</td>
-                <td class="px-5 py-4 font-medium">Cliente #${sim.id_usuario}</td>
+            <tr class="hover:bg-slate-50 text-sm border-b border-gray-100">
+                <td class="px-5 py-4 font-mono text-xs text-gray-500">#${sim.id_simulacion}</td>
+                <td class="px-5 py-4 font-medium text-gray-800">${idCliente}</td>
                 <td class="px-5 py-4">${sim.moneda}</td>
-                <td class="px-5 py-4 font-bold">${simbolo} ${parseFloat(sim.monto_financiar || 0).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
-                <td class="px-5 py-4"><span class="px-2 py-1 text-xs font-bold rounded ${estado === 'Aprobado' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-600'}">${estado}</span></td>
-                <td class="px-5 py-4 text-center"><a href="detalle_solicitud.html?id=${sim.id_simulacion}" class="text-blue-600 font-bold hover:underline text-xs">Ver detalles</a></td>
+                <td class="px-5 py-4 font-bold text-gray-800">${simbolo} ${parseFloat(sim.monto_financiar || 0).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
+                <td class="px-5 py-4"><span class="px-2 py-1 text-xs font-bold rounded ${estado === 'Aprobado' ? 'bg-green-100 text-green-700' : estado === 'Rechazado' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-600'}">${estado}</span></td>
+                <td class="px-5 py-4 text-center"><a href="detalle_solicitud.html?id=${sim.id_simulacion}" class="text-blue-600 font-bold hover:underline text-xs bg-blue-50 px-3 py-2 rounded">Ver detalles</a></td>
             </tr>
         `;
     });
@@ -153,15 +168,17 @@ function actualizarResultadosAsesor(simulaciones) {
     tbody.innerHTML = '';
     aprobados.forEach(sim => {
         const simbolo = sim.moneda === 'Soles' ? 'S/' : '$';
+        const idCliente = obtenerIdentificadorCliente(sim);
+
         tbody.innerHTML += `
-            <tr class="hover:bg-slate-50 text-sm">
-                <td class="px-5 py-4 font-medium">Cliente #${sim.id_usuario} (#${sim.id_simulacion})</td>
-                <td class="px-5 py-4">${simbolo} ${parseFloat(sim.monto_financiar || 0).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
-                <td class="px-5 py-4">${(parseFloat(sim.tcea || 0) * 100).toFixed(2)}%</td>
-                <td class="px-5 py-4">${sim.plazo_meses} meses</td>
-                <td class="px-5 py-4 font-semibold">${simbolo} ${parseFloat(sim.monto_cuota || 0).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
+            <tr class="hover:bg-slate-50 text-sm border-b border-gray-100">
+                <td class="px-5 py-4 font-medium text-gray-800">${idCliente} <span class="text-gray-400 font-mono text-xs">(#${sim.id_simulacion})</span></td>
+                <td class="px-5 py-4 font-bold text-gray-800">${simbolo} ${parseFloat(sim.monto_financiar || 0).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
+                <td class="px-5 py-4 font-medium text-blue-700">${(parseFloat(sim.tcea || 0) * 100).toFixed(2)}%</td>
+                <td class="px-5 py-4 text-gray-600">${sim.plazo_meses} meses</td>
+                <td class="px-5 py-4 font-bold text-gray-800">${simbolo} ${parseFloat(sim.monto_cuota || 0).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
                 <td class="px-5 py-4"><span class="bg-green-100 text-green-700 px-2 py-1 text-xs font-bold rounded">Aprobado</span></td>
-                <td class="px-5 py-4"><a href="detalle_solicitud.html?id=${sim.id_simulacion}" class="text-blue-600 font-bold hover:underline text-xs">Ver detalle</a></td>
+                <td class="px-5 py-4"><a href="detalle_solicitud.html?id=${sim.id_simulacion}" class="text-blue-600 font-bold hover:underline text-xs bg-blue-50 px-3 py-2 rounded">Ver detalle</a></td>
             </tr>
         `;
     });

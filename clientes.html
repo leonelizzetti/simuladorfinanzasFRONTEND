@@ -9,7 +9,9 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-slate-800">
 
-    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-slate-200 flex-col shrink-0">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity md:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-slate-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight text-slate-800">Smart Buy</span>
@@ -25,9 +27,11 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-10 shrink-0">
-            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl"><i class="fa-solid fa-bars"></i></button>
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-10 shrink-0">
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-slate-600 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <h1 class="text-xl font-bold text-slate-800 hidden md:block">Directorio de Clientes</h1>
             <div class="flex items-center gap-4 ml-auto">
                 <div class="flex flex-col text-right">
@@ -38,13 +42,13 @@
             </div>
         </header>
 
-        <div class="p-8 max-w-7xl mx-auto w-full">
+        <div class="p-4 md:p-8 max-w-7xl mx-auto w-full">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-slate-900 mb-1">Clientes y registros</h1>
                 <p class="text-sm text-slate-500">Consulta los datos de las operaciones y el estado de sus solicitudes en el sistema.</p>
             </div>
 
-            <div class="grid grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                     <h3 class="text-xs text-slate-500 font-semibold mb-1 uppercase">Total de operaciones</h3>
                     <p class="text-2xl font-bold text-blue-600" id="statClientesTotal">0</p>
@@ -64,23 +68,34 @@
             </div>
 
             <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-xs">
-                        <tr>
-                            <th class="px-5 py-3">ID Simulación</th>
-                            <th class="px-5 py-3">ID Usuario</th>
-                            <th class="px-5 py-3">Moneda</th>
-                            <th class="px-5 py-3">Monto Financiado</th>
-                            <th class="px-5 py-3">Estado</th>
-                            <th class="px-5 py-3 text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaDirectorioClientes" class="divide-y divide-slate-100 text-slate-700"></tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm min-w-[700px]">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-xs">
+                            <tr>
+                                <th class="px-5 py-3">ID Simulación</th>
+                                <th class="px-5 py-3">Cliente</th>
+                                <th class="px-5 py-3">Moneda</th>
+                                <th class="px-5 py-3">Monto Financiado</th>
+                                <th class="px-5 py-3">Estado</th>
+                                <th class="px-5 py-3 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaDirectorioClientes" class="divide-y divide-slate-100 text-slate-700"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
 
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleMenu);
+    </script>
     <script src="./js/config.js"></script>
     <script src="./js/panel_asesor.js"></script>
 </body>

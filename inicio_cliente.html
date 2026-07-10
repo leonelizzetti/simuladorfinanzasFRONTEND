@@ -9,7 +9,9 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
-    <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity md:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 md:relative md:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
@@ -32,10 +34,10 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between md:justify-end px-10 shrink-0">
-            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
-            <i class="fa-solid fa-bars"></i>
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between md:justify-end px-4 md:px-10 shrink-0">
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-gray-600 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center gap-4">
                 <div class="flex flex-col text-right">
@@ -48,24 +50,24 @@
             </div>
         </header>
 
-        <div class="p-10 max-w-7xl mx-auto w-full flex flex-col gap-6">
+        <div class="p-4 md:p-10 max-w-7xl mx-auto w-full flex flex-col gap-6">
             
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Inicio del Cliente</h1>
                 <p class="text-sm text-gray-500 mt-1">Consulta tus simulaciones, revisa tu estado y continúa con el proceso de crédito vehicular.</p>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex justify-between items-center">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-blue-800 mb-1" id="welcomeMessage">Bienvenido</h2>
                     <p class="text-sm text-gray-500">Aquí tienes el resumen de tu actividad reciente.</p>
                 </div>
-                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-3xl border-2 border-white shadow-sm">
+                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-3xl border-2 border-white shadow-sm shrink-0">
                     <i class="fa-solid fa-user-astronaut"></i>
                 </div>
             </div>
 
-            <div class="grid grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-center items-center text-center">
                     <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-folder-open"></i></div>
                     <span class="text-3xl font-bold text-gray-800" id="countGuardadas">0</span>
@@ -92,13 +94,13 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-6 mt-2">
-                <div class="col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-2">
+                <div class="col-span-1 lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
                     <div class="px-6 py-4 border-b border-gray-100">
                         <h3 class="font-bold text-gray-800">Simulaciones Recientes</h3>
                     </div>
                     <div class="overflow-x-auto p-4">
-                        <table class="w-full text-left text-sm">
+                        <table class="w-full text-left text-sm min-w-[600px]">
                             <thead class="text-xs text-gray-500 uppercase bg-gray-50 rounded-t-lg">
                                 <tr>
                                     <th class="px-4 py-3 rounded-tl-lg">Vehículo</th>
@@ -114,7 +116,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-1 bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="col-span-1 bg-white rounded-xl shadow-sm border border-gray-200 h-fit">
                     <div class="px-6 py-4 border-b border-gray-100">
                         <h3 class="font-bold text-gray-800">Estado de tus solicitudes</h3>
                     </div>
@@ -145,7 +147,17 @@
 
         </div>
     </main>
+
     <script src="./js/config.js"></script>
     <script src="./js/inicio.js"></script>
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleMenu);
+    </script>
 </body>
 </html>
