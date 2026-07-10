@@ -9,7 +9,9 @@
 </head>
 <body class="bg-slate-50 flex h-screen overflow-hidden text-gray-800">
 
-  <aside id="sidebar" class="fixed md:relative z-50 hidden md:flex w-64 h-full bg-white border-r border-gray-200 flex-col shrink-0">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col transform -translate-x-full transition-transform duration-300 lg:relative lg:translate-x-0 shrink-0">
         <div class="h-20 flex items-center px-8 border-b border-gray-100 shrink-0">
             <i class="fa-solid fa-car-side text-blue-700 text-2xl mr-3"></i>
             <span class="font-bold text-xl tracking-tight">Smart Buy</span>
@@ -25,13 +27,13 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 shrink-0">
-            <button onclick="document.getElementById('sidebar').classList.toggle('hidden')" class="md:hidden text-2xl">
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-10 shrink-0">
+            <button onclick="toggleMenu()" class="lg:hidden text-2xl text-gray-600 focus:outline-none">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <h1 class="text-xl font-bold text-gray-800 hidden md:block">Inicio del Asesor/Admin</h1>
-            <div class="flex items-center gap-4 ml-auto">
+            <h1 class="text-xl font-bold text-gray-800 hidden lg:block">Inicio del Asesor/Admin</h1>
+            <div class="flex items-center gap-4 ml-auto lg:ml-auto">
                 <div class="flex flex-col text-right">
                     <span class="text-sm font-bold text-gray-800" id="userNameDisplay">Asesor</span>
                     <span class="text-xs text-gray-500">Asesor Bancario</span>
@@ -42,13 +44,13 @@
             </div>
         </header>
 
-        <div class="p-10 mx-auto w-full max-w-7xl flex flex-col gap-8">
+        <div class="p-4 md:p-10 mx-auto w-full max-w-7xl flex flex-col gap-8">
             <div class="mb-2">
                 <h2 class="text-2xl font-bold text-gray-800">Bienvenido al Panel de Control</h2>
                 <p class="text-sm text-gray-500 mt-1">Gestiona soluciones, aprueba simulaciones y acompaña a los clientes en su crédito vehicular.</p>
             </div>
 
-            <div class="grid grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                     <p class="text-xs text-gray-500 font-semibold mb-1 uppercase">Nuevas Solicitudes / Pendientes</p>
                     <span class="text-2xl font-bold text-orange-500" id="statAsesorPendientes">0</span>
@@ -72,7 +74,7 @@
                     <h3 class="font-bold text-gray-800 text-base">Gestión de Solicitudes Recientes</h3>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm whitespace-nowrap">
+                    <table class="w-full text-left text-sm whitespace-nowrap min-w-[600px]">
                         <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-semibold text-xs">
                             <tr>
                                 <th class="px-5 py-3">ID</th>
@@ -93,5 +95,14 @@
 
     <script src="./js/config.js"></script>
     <script src="./js/panel_asesor.js"></script>
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleMenu);
+    </script>
 </body>
 </html>
